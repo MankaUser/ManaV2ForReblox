@@ -1,3 +1,4 @@
+
 repeat task.wait() until game:IsLoaded()
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/UILibrary.lua"))()
