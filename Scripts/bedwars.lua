@@ -274,38 +274,6 @@ end
 
 local isclone = false
 
---[[function kickKillauraRemote()
-    if (not isclone) then
-        local mouse = game.Players.LocalPlayer:GetMouse()
-        for i,v in pairs(game.Players:GetChildren()) do
-            if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                if mag <= 20 and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-                    if v.Character:FindFirstChild("Head") then
-                        game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged[landmineremote]:FireServer({
-                            ["invisibleLandmine"] = v.Character.Head
-                        })
-                    end
-                end
-            end
-        end 
-    else
-        local mouse = game.Players.LocalPlayer:GetMouse()
-        for i,v in pairs(game.Players:GetChildren()) do
-            if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                local mag = (v.Character.HumanoidRootPart.Position - clone.HumanoidRootPart.Position).Magnitude
-                if mag <= 20 and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-                    if v.Character:FindFirstChild("Head") then
-                        game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged[landmineremote]:FireServer({
-                            ["invisibleLandmine"] = v.Character.Head                
-                        })
-                    end
-                end
-            end
-        end 
-    end
-end--]]
-
 local function getItem(itemName)
 	for i5, v5 in pairs(getinv(lplr)["items"]) do
 		if v5["itemType"] == itemName then
@@ -343,11 +311,10 @@ lib:CreateWindow()
 
 local Tabs = {
     ["Combat"] = lib:CreateTab("Combat",Color3.fromRGB(252, 60, 68),"combat"),
-    ["Movement"] = lib:CreateTab("Movement",Color3.fromRGB(255, 148, 36),"movement"),
+    ["Blatant"] = lib:CreateTab("Blatant",Color3.fromRGB(255, 148, 36),"movement"),
     ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222),"render"),
-    ["Player"] = lib:CreateTab("Player",Color3.fromRGB(83, 214, 110),"player"),
-    ["Exploits"] = lib:CreateTab("Exploits",Color3.fromRGB(157, 39, 41),"exploit"),
-    ["Rektsky"] = lib:CreateTab("RektSky",Color3.fromRGB(64,124,252),"rektsky"),
+    ["Utility"] = lib:CreateTab("Utility",Color3.fromRGB(83, 214, 110),"player"),
+    ["PrivateFeatures"] = lib:CreateTab("PrivateFeatures",Color3.fromRGB(64,124,252),"rektsky"),
     ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228),"world")
 }
 
@@ -358,7 +325,7 @@ do
     local conectionkillaura
     local animspeed = {["Value"] = 0.3}
     local origC0 = game.ReplicatedStorage.Assets.Viewmodel.RightHand.RightWrist.C0
-    local katog = Tabs["Combat"]:CreateToggle({
+    local katog = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "KillAura",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -545,8 +512,8 @@ do
 end
 
 
---[[local conectionkillauraV2
-Tabs["Combat"]:CreateToggle({
+local conectionkillauraV2
+Tabs["Blatant"]:CreateToggle({
     ["Name"] = "KillAuraV2",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -598,11 +565,11 @@ Tabs["Combat"]:CreateToggle({
             end)
         end
     end
-})--]]
+})
 
---[[local TPAURAFUNIv2
+local TPAURAFUNIv2
 local tpaurafunihaha
-tpaurafunihaha = Tabs["Combat"]:CreateToggle({
+tpaurafunihaha = Tabs["Blatant"]:CreateToggle({
     ["Name"] = "TPAura",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -654,7 +621,7 @@ tpaurafunihaha = Tabs["Combat"]:CreateToggle({
             end)
         end
     end
-})--]]
+})
 
 --[[ 
 local ShieldRemote = getremote(debug.getconstants(debug.getprotos(getmetatable(KnitClient.Controllers.ShieldController).raiseShield)[1]))
@@ -867,7 +834,7 @@ local speed
 local speeddropdown = {["Value"] = "CFrame"}
 local speedvalueverus = {["Value"] = 80}
 local verusspeeddelay = {["Value"] = 0.5}
-local speedtog = Tabs["Movement"]:CreateToggle({
+local speedtog = Tabs["Blatant"]:CreateToggle({
     ["Name"] = "Speed",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -977,7 +944,7 @@ verusspeeddelay = speedtog:CreateSlider({
 })
 
 local sprint = false
-Tabs["Movement"]:CreateToggle({
+Tabs["Combat"]:CreateToggle({
     ["Name"] = "Sprint",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -1001,7 +968,7 @@ Tabs["Movement"]:CreateToggle({
 do
     local highjump
     local highjumpforce = {["Value"] = 20}
-    highjump = Tabs["Movement"]:CreateToggle({
+    highjump = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "HighJump",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -1048,7 +1015,7 @@ do
     local longjumpdelay = {["Value"] = 0.1}
     local LJSpeed = {["Value"] = 100}
     local oldthing
-    local lognjump = Tabs["Movement"]:CreateToggle({
+    local lognjump = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "LongJump",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -1222,9 +1189,9 @@ end
     })
 ]]
 
---[[
+
     local flyenabled
-    Tabs["Movement"]:CreateToggle({
+    Tabs["Blatant"]:CreateToggle({
         ["Name"] = "Fly",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -1267,148 +1234,10 @@ end
             end
         end
     })
-]]
 
--- RENDER
 
-function yesyesbed()
-    if lplr.leaderstats.Bed.Value ~= "✅" then
-        local sound = Instance.new("Sound")
-        sound.Parent = workspace
-        sound.SoundId = getasset("rektsky/sound/mc/bedbroken.mp3")
-        sound:Play()
-        wait(7)
-        sound:remove()
-    end
-end
 
-local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
-    if tab.Method == "GET" then
-        return {
-            Body = game:HttpGet(tab.Url, true),
-            Headers = {},
-            StatusCode = 200
-        }
-    else
-        return {
-            Body = "bad exploit",
-            Headers = {},
-            StatusCode = 404
-        }
-    end
-end 
 
-local betterisfile = function(file)
-    local suc, res = pcall(function() return readfile(file) end)
-    return suc and res ~= nil
-end
-
-local cachedassets = {}
-local function getcustomassetfunc(path)
-    if not betterisfile(path) then
-        spawn(function()
-            local textlabel = Instance.new("TextLabel")
-            textlabel.Size = UDim2.new(1, 0, 0, 36)
-            textlabel.Text = "Downloading "..path
-            textlabel.BackgroundTransparency = 1
-            textlabel.TextStrokeTransparency = 0
-            textlabel.TextSize = 30
-            textlabel.Font = Enum.Font.SourceSans
-            textlabel.TextColor3 = Color3.new(1, 1, 1)
-            textlabel.Position = UDim2.new(0, 0, 0, -36)
-            textlabel.Parent = ScreenGuitwo
-            repeat wait() until betterisfile(path)
-            textlabel:Remove()
-        end)
-        local req = requestfunc({
-            Url = "https://raw.githubusercontent.com/8pmX8/rektsky4roblox/main/"..path:gsub("rektsky/sound/mc", "sound/mc"),
-            Method = "GET"
-        })
-        writefile(path, req.Body)
-    end
-    if cachedassets[path] == nil then
-        cachedassets[path] = getasset(path) 
-    end
-    return cachedassets[path]
-end
-
-local cachedassetssds = {}
-local function getcustomassetthingylol(path)
-    if not betterisfile(path) then
-        spawn(function()
-            local textlabel = Instance.new("TextLabel")
-            textlabel.Size = UDim2.new(1, 0, 0, 36)
-            textlabel.Text = "Downloading "..path
-            textlabel.BackgroundTransparency = 1
-            textlabel.TextStrokeTransparency = 0
-            textlabel.TextSize = 30
-            textlabel.Font = Enum.Font.SourceSans
-            textlabel.TextColor3 = Color3.new(1, 1, 1)
-            textlabel.Position = UDim2.new(0, 0, 0, -36)
-            textlabel.Parent = ScreenGuitwo
-            repeat wait() until betterisfile(path)
-            textlabel:Remove()
-        end)
-        local req = requestfunc({
-            Url = "https://raw.githubusercontent.com/8pmX8/rektsky4roblox/main/"..path:gsub("rektsky/assets", "assets"),
-            Method = "GET"
-        })
-        writefile(path, req.Body)
-    end
-    if cachedassetssds[path] == nil then
-        cachedassetssds[path] = getasset(path) 
-    end
-    return cachedassetssds[path]
-end
-
-local gamesound = require(game:GetService("ReplicatedStorage").TS.sound["game-sound"]).GameSound
-Tabs["Render"]:CreateToggle({
-    ["Name"] = "MCSounds",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        getgenv().mcsounds = v
-        if getgenv().mcsounds then
-            spawn(function()
-                lplr.leaderstats.Bed:GetPropertyChangedSignal("Value"):Connect(yesyesbed)
-            end)
-            spawn(function()
-                Client:WaitFor("BedwarsBedBreak"):andThen(function(p13)
-                    p13:Connect(function(p14)
-                        local sound = Instance.new("Sound")
-                        sound.Parent = workspace
-                        sound.SoundId = getcustomassetfunc("rektsky/sound/mc/bedbreak.mp3")
-                        sound:Play()
-                        wait(4)
-                        sound:remove()
-                    end)
-                end)
-            end)
-            local oldsounds = gamesound
-            local newsounds = gamesound
-            newsounds.UI_CLICK = "rbxassetid://535716488"
-            newsounds.PICKUP_ITEM_DROP = getcustomassetfunc("rektsky/sound/mc/pickup.mp3")
-            newsounds.KILL = "rbxassetid://1053296915"
-            newsounds.ERROR_NOTIFICATION = ""
-            newsounds.DAMAGE_1 = "rbxassetid://6361963422"
-            newsounds.DAMAGE = "rbxassetid://6361963422"
-            newsounds.DAMAGE_2 = "rbxassetid://6361963422"
-            newsounds.DAMAGE_3 = "rbxassetid://6361963422"
-            newsounds.SWORD_SWING_1 = ""
-            newsounds.SWORD_SWING_2 = ""
-            newsounds.BEDWARS_PURCHASE_ITEM = getcustomassetfunc("rektsky/sound/mc/buyitem.mp3")
-            newsounds.STATIC_HIT = "rbxassetid://6361963422"
-            newsounds.STONE_BREAK = "rbxassetid://6496157434"
-            newsounds.WOOL_BREAK = getcustomassetfunc("rektsky/sound/mc/woolbreak.mp3")
-            newsounds.WOOD_BREAK = getcustomassetfunc("rektsky/sound/mc/breakwood.mp3")
-            newsounds.GLASS_BREAK = getcustomassetfunc("rektsky/sound/mc/glassbreak.mp3")
-            newsounds.TNT_HISS_1 = getcustomassetfunc("rektsky/sound/mc/tnthiss.mp3")
-            newsounds.TNT_EXPLODE_1 = getcustomassetfunc("rektsky/sound/mc/tntexplode.mp3")
-            gamesound = newsounds
-        else
-            gamesound = oldsounds
-        end
-    end
-})
 
 
 local function Cape(char, texture)
@@ -1568,54 +1397,7 @@ Tabs["Render"]:CreateToggle({
     end
 })
 
-local screngiu
-Tabs["Render"]:CreateToggle({
-    ["Name"] = "WaterMarks",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        if entity.isAlive then
-            if v then
-                screngiu = Instance.new("ScreenGui")
-                local Frame = Instance.new("Frame")
-                local UICorner = Instance.new("UICorner")
-                local ImageLabel = Instance.new("ImageLabel")
-                local TextLabel = Instance.new("TextLabel")
-                screngiu.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-                screngiu.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-                Frame.Parent = screngiu
-                Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-                Frame.BackgroundTransparency = 0.400
-                Frame.Position = UDim2.new(0.0163636357, 0, 0.0343558267, 0)
-                Frame.Size = UDim2.new(0, 149, 0, 149)
-                UICorner.CornerRadius = UDim.new(0, 9)
-                UICorner.Parent = Frame
-                ImageLabel.Parent = Frame
-                ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                ImageLabel.BackgroundTransparency = 1.000
-                ImageLabel.Position = UDim2.new(0.137143791, 0, 0.0700296983, 0)
-                ImageLabel.Size = UDim2.new(0, 108, 0, 108)
-                ImageLabel.Image = getcustomassetthingylol("rektsky/assets/icon.png")
-                TextLabel.Parent = Frame
-                TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                TextLabel.BackgroundTransparency = 1.000
-                TextLabel.BorderSizePixel = 0
-                TextLabel.Position = UDim2.new(0.0402684584, 0, 0.798657715, 0)
-                TextLabel.Size = UDim2.new(0, 132, 0, 30)
-                TextLabel.Font = Enum.Font.SourceSansLight
-                TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-                TextLabel.TextScaled = true
-                TextLabel.TextSize = 14.000
-                TextLabel.TextWrapped = true
-                TextLabel.Text = "RektSky B4 Public"
-                makeRainbowText(TextLabel, true)
-            else
-                makeRainbowText(TextLabel, false)
-                screngiu:Destroy()
-                return
-            end
-        end
-    end
-})
+
 
 
 local ScreenGuie
@@ -1850,20 +1632,6 @@ Tabs["Render"]:CreateToggle({
     end
 })
 
-Tabs["Render"]:CreateToggle({
-    ["Name"] = "RektskyAmbience",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        if v then
-            game.Lighting.Ambient = Color3.fromRGB(0, 255, 255)
-            game.Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
-        else
-            game.Lighting.Ambient = Color3.fromRGB(91, 91, 91)
-            game.Lighting.OutdoorAmbient = Color3.fromRGB(201, 201, 201)
-        end
-    end
-})
-
 local chinahattrail
 local chinahatenabled = false
 Tabs["Render"]:CreateToggle({
@@ -1921,15 +1689,13 @@ Tabs["Render"]:CreateToggle({
     end
 })
 
--- EXPLOITS
-
 function yesoksussybed()
     if lplr.leaderstats.Bed.Value ~= "✅" then
         game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Who ever broke my bed, i have your location", 'All')
     end
 end
 
-Tabs["Exploits"]:CreateToggle({
+Tabs["Utility"]:CreateToggle({
     ["Name"] = "Insults",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -1986,106 +1752,6 @@ Tabs["Exploits"]:CreateToggle({
     end
 })
 
-local shopthingyshopshop = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 2)
-local oldnexttier
-local oldtiered
-local bypassstpidshoptiers = false
-Tabs["Exploits"]:CreateToggle({
-    ["Name"] = "BypassShopTiers",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        if (bypassstpidshoptiers) then
-            for i,v in pairs(shopthingyshopshop) do
-                oldtiered = oldtiered or v.tiered
-                oldnexttier = oldnexttier or v.nextTier
-            end
-            for i,v in pairs(shopthingyshopshop) do
-                v.tiered = nil
-                v.nextTier = nil
-            end
-        else
-            for i,v in pairs(shopthingyshopshop) do
-                v.tiered = oldtiered
-                v.nextTier = oldnexttier
-            end
-        end
-    end
-})
-
-local breakallbedsthing
-breakallbedsthing = Tabs["Exploits"]:CreateToggle({
-    ["Name"] = "BreakAllBeds",
-    ["Keybind"] = nil,
-    ["Callback"] = function(va)
-        local amogusvalue = va
-        if amogusvalue then
-            pcall(function()
-                for i = 1,15 do
-                    for i, v in pairs(game.Workspace.Map.Blocks:GetChildren()) do
-                        if v.Name == "bed" then
-                            game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged[landmineremote]:FireServer({
-                                ["invisibleLandmine"] = v                    
-                            })
-                        end
-                    end
-                end
-            end)
-            breakallbedsthing:silentToggle()
-        end
-    end
-})
-local funikickallthingy
-funikickallthingy = Tabs["Exploits"]:CreateToggle({
-    ["Name"] = "FunnyKickAll",
-    ["Keybind"] = nil,
-    ["Callback"] = function(va)
-        local amogussvalue = va
-        if amogussvalue then
-            pcall(function()
-                for i = 1,15 do
-                    for i, v in pairs(game.Players:GetChildren()) do
-                        if v ~= lplr then
-                            if v.Character:FindFirstChild("Head") then
-                                game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged[landmineremote]:FireServer({
-                                    ["invisibleLandmine"] = v.Character.Head                        
-                                })
-                            end
-                        end
-                    end
-                end
-            end)
-            funikickallthingy:silentToggle()
-        end
-    end
-})
-local funikillallthingy
-funikillallthingy = Tabs["Exploits"]:CreateToggle({
-    ["Name"] = "MovementDisabler",
-    ["Keybind"] = nil,
-    ["Callback"] = function(va)
-        local amogusssvalue = va
-        if amogusssvalue then
-            pcall(function()
-                for i = 1,15 do
-                    for i, v in pairs(game.Players:GetChildren()) do
-                        if v ~= lplr then
-                            if v.Character.HumanoidRootPart then
-                                game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged[landmineremote]:FireServer({
-                                    ["invisibleLandmine"] = v                        
-                                })
-                            end
-                        end
-                    end
-                end
-            end)
-            funikillallthingy:silentToggle()
-        end
-    end
-})
-
--- PLAYER
-
-
 function getmapname()
     for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
         if v.Name == "Map" then
@@ -2102,7 +1768,7 @@ end
 
 local lcmapname = getmapname()
 
-Tabs["Player"]:CreateToggle({
+Tabs["Blatant"]:CreateToggle({
     ["Name"] = "NoFall",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -2119,7 +1785,7 @@ Tabs["Player"]:CreateToggle({
 })
 
 local antivoidpart
-Tabs["Player"]:CreateToggle({
+Tabs["World"]:CreateToggle({
     ["Name"] = "AntiVoid",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -2162,7 +1828,7 @@ function stealcheststrollage()
     end
 end
 
-Tabs["Player"]:CreateToggle({
+Tabs["Utility"]:CreateToggle({
     ["Name"] = "ChestStealer",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -2175,10 +1841,10 @@ Tabs["Player"]:CreateToggle({
     end
 })
 
--- REKTSKY
+
 
   local spammer = false
-Tabs["Rektsky"]:CreateToggle({
+Tabs["Utility"]:CreateToggle({
     ["Name"] = "ChatSpammer",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -2200,7 +1866,7 @@ do
     local sayinchat = {["Value"] = false}
     local notificationsenabled = {["Value"] = true}
     local autoreport = false
-    local autoreportthingy = Tabs["Rektsky"]:CreateToggle({
+    local autoreportthingy = Tabs["Utility"]:CreateToggle({
         ["Name"] = "AutoReport",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -2254,6 +1920,12 @@ do
                     ["i hack"] = "Cheating/Exploiting",
                     ["disco"] = "Offsite Links",
                     ["dc"] = "Offsite Links"
+                    ["No mom"] = "Bullying"
+                    ["No dad"] = "Bullying"
+                    ["No mum"] = "Bullying"
+                    ["Fatherless"] = "Bullying"
+                    ["fatherless"] = "Bullying"
+                    ["suka"] = "Swearing"
                 }
                 function getreport(msg)
                     for i,v in pairs(reporttable) do 
@@ -2294,40 +1966,9 @@ do
     })
 end
 
---[[
-    local hackdetector = false
-    Tabs["Rektsky"]:CreateToggle({
-        ["Name"] = "HackerDetector",
-        ["Keybind"] = nil,
-        ["Callback"] = function(v)
-            hackdetector = v
-            if hackdetector then
-                repeat task.wait() until (matchState == 2)
-                spawn(function()
-                    repeat
-                        task.wait()
-                        if (not hackdetector) then return end
-                        for i, v in pairs(game.Players:GetChildren()) do
-                            if v:FindFirstChild("HumanoidRootPart") then
-                                local oldpos = v.Character.HumanoidRootPart.Position
-                                task.wait(0.5)
-                                local newpos = Vector3.new(v.Character.HumanoidRootPart.Position.X, 0, v.Character.HumanoidRootPart.Position.Z)
-                                local realnewpos = math.floor((newpos - Vector3.new(oldpos.X, 0, oldpos.Z)).magnitude) * 2
-                                if realnewpos > 32 then
-                                    game:GetService("StarterGui"):SetCore("SendNotification", {
-                                        Title = v.Name.." is cheating",
-                                        Text = tostring(math.floor((newpos - Vector3.new(oldpos.X, 0, oldpos.Z)).magnitude)),
-                                        Duration = 5,
-                                    })
-                                end
-                            end
-                        end
-                    until (not hackdetector)
-                end)
-            end
-        end
-    })
-]]
+
+    
+
 
 --[[
     do
@@ -2355,97 +1996,6 @@ end
     end
 ]]
 
---[[
-Tabs["Rektsky"]:CreateToggle({
-    ["Name"] = "FunnyArrayListTroll",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        amongus = v
-        if amongus then
-            local ScreenGuuii = Instance.new("ScreenGui")
-            local uilistlayourthing = Instance.new("UIListLayout")
-            local b = Instance.new("TextLabel")
-            local c = Instance.new("TextLabel")
-            local e = Instance.new("TextLabel")
-            local f = Instance.new("TextLabel")
-            local a = Instance.new("TextLabel")
-            local d = Instance.new("TextLabel")
-            ScreenGuuii.Parent = game.CoreGui
-            uilistlayourthing.Parent = ScreenGuuii
-            uilistlayourthing.HorizontalAlignment = Enum.HorizontalAlignment.Right
-            uilistlayourthing.Padding = UDim.new(0, 9)
-            b.Name = "b"
-            b.Parent = ScreenGuuii
-            b.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            b.BackgroundTransparency = 1.000
-            b.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            b.Size = UDim2.new(0, 27, 0, 14)
-            b.Font = Enum.Font.SourceSansLight
-            b.Text = "FatherDisabler"
-            b.TextColor3 = Color3.fromRGB(255, 255, 255)
-            b.TextSize = 28.000
-            c.Name = "c"
-            c.Parent = ScreenGui
-            c.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            c.BackgroundTransparency = 1.000
-            c.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            c.Size = UDim2.new(0, 27, 0, 14)
-            c.Font = Enum.Font.SourceSansLight
-            c.Text = "CockDisabler"
-            c.TextColor3 = Color3.fromRGB(255, 255, 255)
-            c.TextSize = 28.000
-            e.Name = "e"
-            e.Parent = ScreenGui
-            e.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            e.BackgroundTransparency = 1.000
-            e.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            e.Size = UDim2.new(0, 27, 0, 14)
-            e.Font = Enum.Font.SourceSansLight
-            e.Text = "NiggaKiller"
-            e.TextColor3 = Color3.fromRGB(255, 255, 255)
-            e.TextSize = 28.000
-            f.Name = "f"
-            f.Parent = ScreenGui
-            f.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            f.BackgroundTransparency = 1.000
-            f.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            f.Size = UDim2.new(0, 27, 0, 14)
-            f.Font = Enum.Font.SourceSansLight
-            f.Text = "ChildESP"
-            f.TextColor3 = Color3.fromRGB(255, 255, 255)
-            f.TextSize = 28.000
-            a.Name = "a"
-            a.Parent = ScreenGui
-            a.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            a.BackgroundTransparency = 1.000
-            a.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            a.Size = UDim2.new(0, 27, 0, 14)
-            a.Font = Enum.Font.SourceSansLight
-            a.Text = "NoCumSlowDown"
-            a.TextColor3 = Color3.fromRGB(255, 255, 255)
-            a.TextSize = 28.000
-            d.Name = "d"
-            d.Parent = ScreenGui
-            d.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            d.BackgroundTransparency = 1.000
-            d.Position = UDim2.new(0.985937476, 0, 0.0282208584, 0)
-            d.Size = UDim2.new(0, 27, 0, 14)
-            d.Font = Enum.Font.SourceSansLight
-            d.Text = "AutoGroom"
-            d.TextColor3 = Color3.fromRGB(255, 255, 255)
-            d.TextSize = 28.000
-            makeRainbowText(a, true)
-            makeRainbowText(b, true)
-            makeRainbowText(c, true)
-            makeRainbowText(d, true)
-            makeRainbowText(e, true)
-            makeRainbowText(f, true)
-        else
-            ScreenGuuii:Destroy()
-        end
-    end
-})
---]]
 
 -- WORLD
 
