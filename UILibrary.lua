@@ -80,7 +80,7 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 local ScreenGuitwo = Instance.new("ScreenGui")
 ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
 ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGuitwo.Name = "ManaNotifications"
+ScreenGuitwo.Name = "RektskyNotificationGui"
 local getasset = getsynasset or getcustomasset
 
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
