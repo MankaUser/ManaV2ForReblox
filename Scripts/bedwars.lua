@@ -342,13 +342,13 @@ end
 lib:CreateWindow()
 
 local Tabs = {
-    ["Combat"] = lib:CreateTab("Combat",Color3.fromRGB(252, 60, 68),"combat"),
-    ["Movement"] = lib:CreateTab("Movement",Color3.fromRGB(255, 148, 36),"movement"),
-    ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222),"render"),
-    ["Player"] = lib:CreateTab("Player",Color3.fromRGB(83, 214, 110),"player"),
-    ["Exploits"] = lib:CreateTab("Exploits",Color3.fromRGB(157, 39, 41),"exploit"),
-    ["Rektsky"] = lib:CreateTab("RektSky",Color3.fromRGB(64,124,252),"rektsky"),
-    ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228),"world")
+    ["Combat"] = lib:CreateTab("Combat",Color3.fromRGB(252, 60, 68),""),
+    ["Movement"] = lib:CreateTab("Movement",Color3.fromRGB(255, 148, 36),""),
+    ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222),""),
+    ["Player"] = lib:CreateTab("Player",Color3.fromRGB(83, 214, 110),""),
+    ["Exploits"] = lib:CreateTab("Exploits",Color3.fromRGB(157, 39, 41),""),
+    ["Rektsky"] = lib:CreateTab("RektSky",Color3.fromRGB(64,124,252),""),
+    ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228),"")
 }
 
 -- COMBAT
