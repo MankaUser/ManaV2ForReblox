@@ -17,8 +17,8 @@ if isfolder("Mana/Assets") == false then
     makefolder("Mana/Assets")
 end
 
-if isfolder("Mana/Assets/Sounds") == false then
-    makefolder("Mana/Assets/Sounds")
+if isfolder("Mana/sound") == false then
+    makefolder("Mana/sound")
 end
 
 if isfolder("Mana/Config") == false then
@@ -151,7 +151,7 @@ local function getcustomassetfuncforsounds(path)
             textlabel:Remove()
         end)
         local req = requestfunc({
-            Url = "https://raw.githubusercontent.com/MankaUser/ManaV2Reblox/main/"..path:gsub("Mana/Assets/Sounds", "Sounds"),
+            Url = "https://raw.githubusercontent.com/MankaUser/ManaV2Reblox/main/"..path:gsub("Mana/sound", "sound"),
             Method = "GET"
         })
         writefile(path, req.Body)
@@ -283,9 +283,9 @@ end
 local function playdingsound(istrue) 
     if lib["Sounds"] then
         if istrue then
-            playsound(getcustomassetfuncforsounds("Mana/Assets/Sounds/enable.mp3") or getasset("Mana/Assets/Sounds/enable.mp3"))
+            playsound(getcustomassetfuncforsounds("Mana/sound/enable.mp3") or getasset("Mana/sound/enable.mp3"))
         else
-            playsound(getcustomassetfuncforsounds("Mana/Assets/Sounds/enable.mp3") or getasset("Mana/Assets/Sounds/enable.mp3"))
+            playsound(getcustomassetfuncforsounds("Mana/sound/disable.mp3") or getasset("Mana/sound/disable.mp3"))
         end
     end
 end
