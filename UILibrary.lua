@@ -516,7 +516,7 @@ function lib:CreateWindow()
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
-                    playdingsound(true)
+                   -- playdingsound(true)
                 end
             end
     
