@@ -302,7 +302,7 @@ function lib:CreateWindow()
     uilistthingy.FillDirection = Enum.FillDirection.Horizontal
     uilistthingy.SortOrder = Enum.SortOrder.LayoutOrder
     uilistthingy.Padding = UDim.new(0, 40)
-    function lib:CreateTab(title, color, asset)
+    function lib:CreateTab(title, color)
         table.insert(tabs, #tabs)
         local tab = Instance.new("TextButton")
         local tabname = Instance.new("TextLabel")
@@ -342,7 +342,7 @@ function lib:CreateWindow()
         assetthing.BackgroundTransparency = 1
         assetthing.Position = UDim2.new(0.86, 0,0.154, 0)
         assetthing.Size = UDim2.new(0, 30, 0, 30)
-        assetthing.Image = getcustomassetfunc("rektsky/assets/" .. asset .. ".png") or getasset("rektsky/assets/" .. asset .. ".png")
+        --assetthing.Image = getcustomassetfunc("rektsky/assets/" .. asset .. ".png") or getasset("rektsky/assets/" .. asset .. ".png")
         local tabtable = {
             ["Toggles"]={}
         }
