@@ -1113,53 +1113,7 @@ end
 
 
 
-    longjumpfuni = Tabs["Mana"]:CreateToggle({
-        ["Name"] = "CustomLongJump",
-        ["Keybind"] = nil,
-        ["Callback"] = function(v)
-            longjumpval = v
-            if longjumpval then
-                if game.Workspace.Map.Blocks:FindFirstChild("cannon") then
-                    spawn(function()
-                        repeat
-                            for i,v in pairs(game.Workspace.Map.Blocks:GetChildren()) do
-                                if v.Name == "cannon" then
-                                    workspace.Gravity = 0
-                                    v.LaunchSelfPrompt.HoldDuration = 0
-                                    workspace.Gravity = 0
-                                    fireproximityprompt(v.LaunchSelfPrompt)
-                                    workspace.Gravity = 0
-                                end
-                            end
-                        wait()
-                        until (not longjumpval)   
-                    end)
-                    spawn(function()
-                        workspace.Gravity = 0
-                        wait(0.1)
-                        workspace.Gravity = 0
-                        wait(0.1)
-                        workspace.Gravity = 0
-                        wait(0.1)
-                        workspace.Gravity = 0
-                        wait(0.62)
-                        workspace.Gravity = 196.19999694824
-                    end)
-                    spawn(function()
-                        for i = 1, 4 do
-                            lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
-                            wait(0.1)
-                            lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                        end
-                    end)
-                    longjumpfuni:silentToggle()
-                end
-            else
-                workspace.Gravity = 196.19999694824
-                return
-            end
-        end
-    })
+    
 
 
 --[[
