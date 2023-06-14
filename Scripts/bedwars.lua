@@ -310,12 +310,12 @@ end
 lib:CreateWindow()
 
 local Tabs = {
-    ["Combat"] = lib:CreateTab("Combat",Color3.fromRGB(252, 60, 68),""),
-    ["Blatant"] = lib:CreateTab("Blatant",Color3.fromRGB(255, 148, 36),""),
-    ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222),""),
-    ["Utility"] = lib:CreateTab("Utility",Color3.fromRGB(83, 214, 110),""),
-    ["Mana"] = lib:CreateTab("PrivateFeatures",Color3.fromRGB(64,124,252),""),
-    ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228),"")
+    ["Combat"] = lib:CreateTab("Combat",Color3.fromRGB(252, 60, 68)),
+    ["Blatant"] = lib:CreateTab("Blatant",Color3.fromRGB(255, 148, 36)),
+    ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222)),
+    ["Utility"] = lib:CreateTab("Utility",Color3.fromRGB(83, 214, 110)),
+    ["Mana"] = lib:CreateTab("PrivateFeatures",Color3.fromRGB(64,124,252)),
+    ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228))
 }
 
 -- COMBAT
