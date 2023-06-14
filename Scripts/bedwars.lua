@@ -1113,8 +1113,8 @@ end
 
 
 
-    longjumpfuni = Tabs["Movement"]:CreateToggle({
-        ["Name"] = "Mana",
+    longjumpfuni = Tabs["Mana"]:CreateToggle({
+        ["Name"] = "CustomLongJump",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
             longjumpval = v
