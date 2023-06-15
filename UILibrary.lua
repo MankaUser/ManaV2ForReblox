@@ -818,7 +818,7 @@ function lib:CreateWindow()
 end
 lib:ToggleLib()
 uis.InputBegan:Connect(function(input)
-    if input.KeyCode == Enum.KeyCode.RightShift then
+    if input.KeyCode == Enum.KeyCode.N then
         lib:ToggleLib()
     end
 end) 
