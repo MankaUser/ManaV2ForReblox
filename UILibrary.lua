@@ -312,6 +312,8 @@ function lib:CreateWindow()
         uilistlay.Parent = tab
         uilistlay.SortOrder = Enum.SortOrder.LayoutOrder
         tab.Name = title
+	tab.Draggable = true
+	tab.Active = true
         tab.ZIndex = 1
         tab.Parent = TabsFrame
         tab.BackgroundColor3 = Color3.fromRGB(14, 14, 23)
