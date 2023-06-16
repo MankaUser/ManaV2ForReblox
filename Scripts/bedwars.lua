@@ -971,7 +971,7 @@ end
                             end
                         else
                             task.wait()
-                            workspace.Gravity = 200
+                            workspace.Gravity = 1
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
                             local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
                             if SpaceHeld then
