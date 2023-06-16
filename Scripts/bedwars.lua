@@ -10,14 +10,13 @@ local whiteliststhing = {}
 pcall(function()
     whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
 end)
-
---do
+-do
     local oldcharacteradded = entity.characterAdded
     entity.characterAdded = function(plr, char, localcheck)
         return oldcharacteradded(plr, char, localcheck, function() end)
-    --end
+    end
     entity.fullEntityRefresh()
---end
+end
 
 local spawn = function(func) 
     return coroutine.wrap(func)()
