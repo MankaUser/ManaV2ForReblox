@@ -321,6 +321,7 @@ function lib:CreateWindow()
         tab.Active=true
         tab.LayoutOrder = 1 + #tabs
         tab.AutoButtonColor = false
+	tab.Text = ""
     
         tabname.Name = title
         tabname.Parent = tab
