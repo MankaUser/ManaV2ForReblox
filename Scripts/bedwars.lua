@@ -17,7 +17,7 @@ do
         return oldcharacteradded(plr, char, localcheck, function() end)
     end
     entity.fullEntityRefresh()
-end
+--end
 
 local spawn = function(func) 
     return coroutine.wrap(func)()
