@@ -1644,16 +1644,3 @@ time = TimeOfDay:CreateDropDown({
         ["List"] = {"Day", "Night"},
         ["Default"] = "Day"
     })
-
-if game.Players.LocalPlayer == 8907869 then
-a = game:GetService("CoreGui"):FindFirstChild("ScreenGui"):FindFirstChild("PrivateFeatures")
-b = game:GetService("CoreGui"):FindFirstChild("ScreenGui"):FindFirstChild("Mana")
-
-if a then
-a:Destroy()
-end
-
-if b then
-b:Destroy()
-end
-end
