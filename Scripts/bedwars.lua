@@ -4,12 +4,7 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser
 
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
-
-local whiteliststhing = {}
-
-pcall(function()
-    whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
-end)
+local whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
 do
     local oldcharacteradded = entity.characterAdded
     entity.characterAdded = function(plr, char, localcheck)
