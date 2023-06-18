@@ -1,4 +1,4 @@
-      HPScreen = Instance.new("ScreenGui", game:GetService("CoreGui"))
+                        HPScreen = Instance.new("ScreenGui", game:GetService("CoreGui"))
 			Background = Instance.new("Frame")
 			Text = Instance.new("TextLabel")
 			UICorner = Instance.new("UICorner")
