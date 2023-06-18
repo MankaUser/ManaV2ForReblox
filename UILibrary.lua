@@ -25,6 +25,10 @@ if isfolder("Mana/CustomModules") == false then
     makefolder("Mana/CustomModules")
 end
 
+if isfolder("Mana/UIModules") == false then
+    makefolder("Mana/UIModules")
+end
+
 local sliderapi = {}
 
 local foldername = "Mana/Config"
@@ -76,7 +80,7 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 local ScreenGuitwo = Instance.new("ScreenGui")
 ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
 ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGuitwo.Name = "RektskyNotificationGui"
+ScreenGuitwo.Name = "ManaNotificationGui"
 local getasset = getsynasset or getcustomasset
 
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
@@ -224,7 +228,7 @@ local function createnotification(title, text, delay2, toggled)
         end)
     end)
 end
-createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
+--createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
 local function dragGUI(gui, dragpart)
     spawn(function()
         local dragging
@@ -281,7 +285,7 @@ local function playdingsound(istrue)
         if istrue then
             playsound(getcustomassetfuncforsounds("Mana/Sounds/enable.mp3") or getasset("Mana/Sounds/enable.mp3"))
         else
-            playsound(getcustomassetfuncforsounds("Mana/Sounds//disable.mp3") or getasset("Mana/Sounds/disable.mp3"))
+            playsound(getcustomassetfuncforsounds("Mana/Sounds/disable.mp3") or getasset("Mana/Sounds/disable.mp3"))
         end
     end
 end
