@@ -24,7 +24,7 @@ end
 
 local getasset = getsynasset or getcustomasset
 
-local ScreenGuitwo = game.CoreGui.RektskyNotificationGui
+local ScreenGuitwo = game.CoreGui.ManaNotificationGui
 
 local function createnotification(title, text, delay2, toggled)
     spawn(function()
@@ -1778,3 +1778,5 @@ Tabs["Render"]:CreateToggle({
 })
 
 ]]
+
+createnotification("Mana", "Press N button to toggle gui", 5, true)
