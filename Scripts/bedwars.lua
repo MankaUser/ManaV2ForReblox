@@ -4,7 +4,12 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser
 
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
-local whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+
+local whiteliststhing = {}
+
+pcall(function()
+    whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+end)
 do
     local oldcharacteradded = entity.characterAdded
     entity.characterAdded = function(plr, char, localcheck)
@@ -365,13 +370,14 @@ local Tabs = {
     ["Blatant"] = lib:CreateTab("Blatant",Color3.fromRGB(255, 148, 36)),
     ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222)),
     ["Utility"] = lib:CreateTab("Utility",Color3.fromRGB(83, 214, 110)),
-    ["Mana"] = lib:CreateTab("Broken / laggy features",Color3.fromRGB(64,124,252)),
     ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228)),
-    ["Legit"] = lib:CreateTab("LegitModules",Color3.fromRGB(196, 201, 95)) 
+    ["Legit"] = lib:CreateTab("LegitModules",Color3.fromRGB(196, 201, 95)),
+    ["Misc"] = lib:CreateTab("Other",Color3.fromRGB(240, 157, 62))
     }
 
 -- COMBAT
 
+--[[ 
 do
     local oldbs
     local conectionkillaura
@@ -562,6 +568,8 @@ do
         ["Round"] = 1
     })
 end
+--]]
+
 
 
 do
@@ -935,13 +943,35 @@ end
     })
 
 
+Speedeb = {["Value"] = 23}
+SpeedobBeb = Tabs["Blatant"]:CreateToggle({
+    ["Name"] = "Speed",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v == true then
+             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+        else
+             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+    end
+})
 
+Speedeb = SpeedobBeb:CreateSlider({
+        ["Name"] = "Speed",
+        ["Function"] = function()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 23,
+        ["Default"] = 23,
+        ["Round"] = 0
+    })
     
 
 
-
-    local flyenabled
-    Tabs["Blatant"]:CreateToggle({
+local flyspeedb = {["Value"] = 23}
+local flyenabled
+local fly = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "Fly",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -953,6 +983,7 @@ end
                         if clone then
                             task.wait()
                             workspace.Gravity = 1
+                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
                             local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
                             if SpaceHeld then
@@ -981,11 +1012,23 @@ end
                 end)
             else
                 conectthingylol:Disconnect()
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
             end
         end
     })
 
-
+flyspeedb = fly:CreateSlider({
+        ["Name"] = "FlyWalkSpeed",
+        ["Function"] = function()
+        if flyenabled then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
+        end
+        end,
+        ["Min"] = 0,
+        ["Max"] = 23,
+        ["Default"] = 23,
+        ["Round"] = 0
+    })
 
 local colorbox
 local function makeRainbowText(text)
@@ -1008,11 +1051,23 @@ local function makeRainbowText(text)
     end)
 end
 
-local function makeRainbowFrame(frame)
+local colorboxsecond
+local function makeRainbowBackground(text)
+    spawn(function()
+        colorboxsecond = Color3.fromRGB(170,0,170)
+        local x = 0
+        while wait(0.1) do
+            colorboxsecond = Color3.fromHSV(x,1,1)
+            x = x + 4.5/255
+            if x >= 1 then
+                x = 0
+            end
+        end
+    end)
     spawn(function()
         repeat
             wait()
-            frame.BackgroundColor3 = colorbox
+            text.BackgroundColor3 = colorboxsecond
         until true == false
     end)
 end
@@ -1182,7 +1237,7 @@ function yesoksussybed()
 end
 
 
-
+--[[
 local shopthingyshopshop = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.games.bedwars.shop["bedwars-shop"]).BedwarsShop.getShopItem, 2)
 local oldnexttier
 local oldtiered
@@ -1209,7 +1264,7 @@ Tabs["Mana"]:CreateToggle({
     end
 })
 
-
+]]
 
 
 function getmapname()
@@ -1306,7 +1361,7 @@ Tabs["Utility"]:CreateToggle({
 
 --[[
     local hackdetector = false
-    Tabs["Rektsky"]:CreateToggle({
+    Tabs["Utility"]:CreateToggle({
         ["Name"] = "HackerDetector",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
@@ -1366,7 +1421,7 @@ Tabs["Utility"]:CreateToggle({
 ]]
 
 --[[
-Tabs["Rektsky"]:CreateToggle({
+Tabs["Utility"]:CreateToggle({
     ["Name"] = "FunnyArrayListTroll",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -1455,9 +1510,8 @@ Tabs["Rektsky"]:CreateToggle({
         end
     end
 })
---]]
 
--- WORLD
+]]
 
 local oldpos = Vector3.new(0, 0, 0)
 local function getScaffold(vec, diagonaltoggle)
@@ -1615,27 +1669,112 @@ Tabs["Utility"]:CreateToggle({
     end
 })
 
+local Hours = {["Value"] = 13}
+local Minutes = {["Value"] = 0}
+
 TimeOfDay = Tabs["Render"]:CreateToggle({
     ["Name"] = "TimeOfDay",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
         if v == true then
-             game.Lighting.TimeOfDay = "00:00:00"
+             game.Lighting.TimeOfDay = Hours["Value"]..":"..Minutes["Value"]..":00"
         else
              game.Lighting.TimeOfDay = "13:00:00"
         end
     end
 })
-
-time = TimeOfDay:CreateDropDown({
-        ["Name"] = "Time",
-        ["Function"] = function(val)
-            if val == "Night" then
-                game.Lighting.TimeOfDay = "00:00:00"
-            elseif val == "Day" then
-                game.Lighting.TimeOfDay = "13:00:00"
-            end
+    
+    Hours = TimeOfDay:CreateSlider({
+        ["Name"] = "Hours",
+        ["Function"] = function()
+        game.Lighting.TimeOfDay = Hours["Value"]..":"..Minutes["Value"]..":00"
         end,
-        ["List"] = {"Day", "Night"},
-        ["Default"] = "Day"
+        ["Min"] = 0,
+        ["Max"] = 24,
+        ["Default"] = 13,
+        ["Round"] = 0
     })
+    
+    Minutes = TimeOfDay:CreateSlider({
+        ["Name"] = "Minutes",
+        ["Function"] = function()
+        game.Lighting.TimeOfDay = Hours["Value"]..":"..Minutes["Value"]..":00"
+        end,
+        ["Min"] = 0,
+        ["Max"] = 64,
+        ["Default"] = 30,
+        ["Round"] = 0
+    })
+    
+local HPBar = game.Players.LocalPlayer.PlayerGui:FindFirstChild("hotbar")["1"].HotbarHealthbarContainer.HealthbarProgressWrapper["1"]
+Tabs["Render"]:CreateToggle({
+    ["Name"] = "RainbowHPBar",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v == true then
+             makeRainbowBackground(HPBar)
+        else
+             print("lel")
+        end
+    end
+})
+--[[
+Tabs["Render"]:CreateToggle({
+    ["Name"] = "HP",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v == true then
+
+            HPScreen = Instance.new("ScreenGui", game:GetService("CoreGui"))
+			Background = Instance.new("Frame")
+			Text = Instance.new("TextLabel")
+			UICorner = Instance.new("UICorner")
+			Dragg = Instance.new("TextLabel")
+			ICorner_2 = Instance.new("UICorner")
+			
+			Background.Name = "Background"
+			Background.Parent = HPScreen
+			Background.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+			Background.BackgroundTransparency = 1.000
+			Background.Position = UDim2.new(0.0220729373, 0, 0.0688000023, 0)
+			Background.Size = UDim2.new(0, 100, 0, 40)
+			Background.Draggable = true
+			Background.Active = true
+			
+			Text.Name = "Text"
+			Text.Parent = Background
+			Text.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+			Text.BackgroundTransparency = 0.500
+			Text.BorderSizePixel = 0
+			Text.Position = UDim2.new(0.400000006, 0, 0, 0)
+			Text.Size = UDim2.new(0, 60, 0, 40)
+			Text.Font = Enum.Font.Gotham
+			
+			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Text.TextSize = 20.000
+			
+			UICorner.CornerRadius = UDim.new(0, 3)
+			UICorner.Parent = Text
+			
+			Dragg.Name = "Dragg"
+			Dragg.Parent = Background
+			Dragg.BackgroundColor3 = Color3.fromRGB(141, 255, 121)
+			Dragg.BackgroundTransparency = 0.500
+			Dragg.BorderSizePixel = 0
+			Dragg.Position = UDim2.new(0.0599999987, 0, 0, 0)
+			Dragg.Size = UDim2.new(0, 35, 0, 40)
+			Dragg.Font = Enum.Font.SourceSans
+			Dragg.Text = ""
+			Dragg.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Dragg.TextSize = 14.000
+			
+			while wait (0.1) do
+			Text.Text = game.Players.LocalPlayer.Character.Humanoid.Health
+			end
+        else
+             
+        end
+    end
+})
+
+]]
