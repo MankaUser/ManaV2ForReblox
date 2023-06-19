@@ -161,6 +161,16 @@ local function getcustomassetfuncforsounds(path)
     end
     return cachedassetstwo[path]
 end
+
+function lib:ToggleLib()
+    if not ScreenGui.Enabled and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
+        ScreenGui.Enabled = true
+    else
+        if game:GetService("UserInputService"):GetFocusedTextBox() == nil then
+            ScreenGui.Enabled = false
+        end
+    end
+end
 local uis = game:GetService("UserInputService")
 local input = game:GetService("UserInputService")
 local ms = game.Players.LocalPlayer:GetMouse()
@@ -813,14 +823,6 @@ function lib:CreateWindow()
         return tabtable
     end
 end
-function lib:ToggleLib()
-    if ScreenGui:FindFirstChild("Tabs").Visible == true then
-     ScreenGui:FIndFirstChild("Tabs").Visible = false
-    elseif ScreenGui:FindFirstChild("Tabs").Visible == false then
-     ScreenGui:FIndFirstChild("Tabs").Visible = true
-	end
-end
-
 lib:ToggleLib()
 uis.InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.N then
