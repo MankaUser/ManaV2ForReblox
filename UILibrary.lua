@@ -163,13 +163,11 @@ local function getcustomassetfuncforsounds(path)
 end
 
 function lib:ToggleLib()
-    if not ScreenGui.Enabled and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
-        ScreenGui.Enabled = true
-    else
-        if game:GetService("UserInputService"):GetFocusedTextBox() == nil then
-            ScreenGui.Enabled = true
-        end
-    end
+    if ScreenGui:FindFirstChild("Tabs").Visible == true then
+     ScreenGui:FIndFirstChild("Tabs").Visible = false
+    elseif ScreenGui:FindFirstChild("Tabs").Visible == false then
+     ScreenGui:FIndFirstChild("Tabs").Visible = true
+	end
 end
 local uis = game:GetService("UserInputService")
 local input = game:GetService("UserInputService")
