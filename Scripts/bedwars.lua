@@ -383,7 +383,7 @@ do
     local conectionkillaura
     local animspeed = {["Value"] = 0.3}
     local origC0 = game.ReplicatedStorage.Assets.Viewmodel.RightHand.RightWrist.C0
-    local katog = Tabs["Mana"]:CreateToggle({
+    local katog = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "KillAura",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
