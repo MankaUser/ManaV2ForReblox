@@ -164,10 +164,10 @@ end
 
 function lib:ToggleLib()
     if not ScreenGui.Enabled and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
-        ScreenGui.Enabled = true
+        ScreenGui:FindFirstChild("Tabs").Visible = true
     else
         if game:GetService("UserInputService"):GetFocusedTextBox() == nil then
-            ScreenGui.Enabled = false
+            ScreenGui:FindFirstChild("Tabs").Visible = true
         end
     end
 end
