@@ -25,8 +25,8 @@ if isfolder("Mana/Scripts") == false then
     makefolder("Mana/Scripts")
 end
 
-if isfolder("Mana/UIModules") == false then
-    makefolder("Mana/UIModules")
+if isfolder("Mana/Modules") == false then
+    makefolder("Mana/Modules")
 end
 
 local sliderapi = {}
