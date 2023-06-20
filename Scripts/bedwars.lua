@@ -1,4 +1,4 @@
- repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:IsLoaded()
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/UILibrary.lua"))()
 
@@ -7,9 +7,8 @@ local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7Grand
 
 local whiteliststhing = {}
 
-pcall(function()
-    whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
-end)
+whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+
 do
     local oldcharacteradded = entity.characterAdded
     entity.characterAdded = function(plr, char, localcheck)
@@ -472,11 +471,16 @@ local function getEquipped()
     return {["Object"] = obj, ["Type"] = typetext}
 end
 
+
 do
-    local clickspeed = {["Value"] = 20}
-    killauraJumpb = {["Value"] = false}
-    local killaura = Tabs["Blatant"]:CreateToggle({
-        ["Name"] = "Killaura",
+    local oldbs
+    local conectionkillaura
+    local animspeed = {["Value"] = 0.3}
+    local AttackSpeed = {["Value"] = 15}
+    local DistVal = {["Value"] = 10}
+    local origC0 = game.ReplicatedStorage.Assets.Viewmodel.RightHand.RightWrist.C0
+    local katog = Tabs["Blatant"]:CreateToggle({
+        ["Name"] = "KillAura",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
             if v then
@@ -487,13 +491,10 @@ do
                                 wait(0.01)
                                     if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
                                          local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                                        if mag <= 20 and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-				                        task.wait(1/clickspeed["Value"])
+                                        if mag <= DistVal["Value"] and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+				                        task.wait(1/AttackSpeed["Value"])
 				                            if getEquipped()["Type"] == "sword" then 
 				                                SwordCont:swingSwordAtMouse()
-				                                if killauraJumpb["Value"] == true then
-				                                game.Players.LocalPlayer.Character.Humanoid.Jump = true
-				                                end
 				                 end
 				                     end
 				                        end
@@ -501,23 +502,109 @@ do
 				                         
                     until (not v)
                 end)
-            else
+            
             end
+            
+            spawn(function()
+                repeat
+                    if (not kauraval) then return end
+                    task.wait(animspeed["Value"])
+                    local plrthinglopl = GetAllNearestHumanoidToPosition(DistVal["Value"], 1)
+                    if plrthinglopl then
+                        for i,v in pairs(plrthinglopl) do
+                            if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+                                if v.Team ~= tostring(lplr.Team) then
+                                    if killaurafirstpersonanim["Value"] then
+                                        pcall(function()
+                                            if killauraanimval["Value"] == "Cool" then
+                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
+                                                    for i, v in pairs(autoblockanim) do
+                                                        coolanimlol = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
+                                                        coolanimlol:Play()
+                                                        task.wait(v.Time - 0.01)
+                                                    end
+                                                end
+                                            elseif killauraanimval["Value"] == "German" then
+                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
+                                                    for i, v in pairs(funnyanim) do
+                                                        killauracurrentanim = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
+                                                        killauracurrentanim:Play()
+                                                        task.wait(v.Time - 0.01)
+                                                    end
+                                                end
+                                            elseif killauraanimval["Value"] == "KillMyself" then
+                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
+                                                    for i, v in pairs(kmsanim) do
+                                                        killauracurrentanim = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
+                                                        killauracurrentanim:Play()
+                                                        task.wait(v.Time - 0.01)
+                                                    end
+                                                end
+                                            end    
+                                        end)
+                                    end
+                                end
+                            end
+                        end
+                        if killauraanimval["Value"] == "Cool" then
+                            if (not rgfejd) then
+                                newthingy = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
+                                newthingy:Play()
+                            end
+                        end
+                        if killauraanimval["Value"] == "KillMyself" then
+                            if (not rgfejd) then
+                                sdfsdf = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
+                                sdfsdf:Play()
+                            end
+                        end
+                    end
+                until (not kauraval)
+            end)
         end
     })
-    clickspeed = killaura:CreateSlider({
+    
+    
+    DistVal = katog:CreateSlider({
+        ["Name"] = "Distance",
+        ["Function"] = function() end,
+        ["Min"] = 1,
+        ["Max"] = 10,
+        ["Default"] = 10,
+        ["Round"] = 0
+    })
+    AttackSpeed = katog:CreateSlider({
         ["Name"] = "AttackSpeed",
         ["Function"] = function() end,
         ["Min"] = 0,
         ["Max"] = 20,
-        ["Default"] = 20,
+        ["Default"] = 15,
         ["Round"] = 0
     })
-    
-    killauraJumpb = killaura:CreateOptionTog({
-        ["Name"] = "Jump",
-        ["Default"] = false,
-        ["Func"] = function() end
+    killauraanimval = katog:CreateDropDown({
+        ["Name"] = "Anim",
+        ["Function"] = function(val)
+            if val == "German" then
+                zdsqzd = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(0.5, -0.01, -1.91) * CFrame.Angles(math.rad(-51), math.rad(9), math.rad(56))})
+                zdsqzd:Play()
+            elseif val == "Penis" then
+                cock = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-1.8, 0.5, -1.01) * CFrame.Angles(math.rad(-90), math.rad(0), math.rad(-90))})
+                cock:Play()
+            elseif val == "KillMyself" then
+                sdfsdf = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
+                sdfsdf:Play()
+            end
+        end,
+        ["List"] = {"Cool", "German", "KillMyself"},
+        ["Default"] = "Cool"
+    })
+    animspeed = katog:CreateSlider({
+        ["Name"] = "AnimationSpeed",
+        ["Function"] = function() end,
+        ["Min"] = 0.1,
+        ["Max"] = 0.5,
+        ["Default"] = 0.3,
+        ["Round"] = 1
     })
 end
 
@@ -742,7 +829,9 @@ do
         ["Round"] = 0
     })
 end
---[[
+
+Speedeb = {["Value"] = 23}
+
 do
     local longjumpval = false
     local gravityval = {["Value"] = 0}
@@ -755,13 +844,13 @@ do
         ["Callback"] = function(v)
             longjumpval = v
             if longjumpval then
-                oldthing = oldthing or speedvalue["Value"]
+                oldthing = oldthing or Speedeb["Value"]
                 workspace.Gravity = gravityval["Value"]
                 repeat
                     if (not longjumpval) then break end
-                    speedvalue["Value"] = LJSpeed["Value"]
+                    Speedeb["Value"] = LJSpeed["Value"]
                     task.wait(longjumpdelay["Value"])
-                    speedvalue["Value"] = oldthing
+                    Speedeb["Value"] = oldthing
                     task.wait(0.12)
                 until (not longjumpval)
             else
@@ -796,11 +885,11 @@ do
         ["Round"] = 0
     })
 end
---]]
 
+do
     local customlongjumpval = false
-    Tabs["Blatant"]:CreateToggle({
-        ["Name"] = "LongJump",
+local LongJumpV2 = Tabs["Blatant"]:CreateToggle({
+        ["Name"] = "LongJumpV2",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
             customlongjumpval = v
@@ -839,7 +928,16 @@ end
             end
         end
     })
-
+    
+    LongJumpV2Gravity = LongJumpV2:CreateSlider({
+        ["Name"] = "Gravity",
+        ["Function"] = function() end,
+        ["Min"] = 0,
+        ["Max"] = 23,
+        ["Default"] = 1,
+        ["Round"] = 0
+    })
+end
 
 
     local cloneval = false
@@ -872,8 +970,6 @@ end
         end
     })
 
-
-Speedeb = {["Value"] = 23}
 SpeedobBeb = Tabs["Blatant"]:CreateToggle({
     ["Name"] = "Speed",
     ["Keybind"] = nil,
@@ -898,9 +994,9 @@ Speedeb = SpeedobBeb:CreateSlider({
     })
     
 
-
-local flyspeedb = {["Value"] = 23}
 local flygravityb = {["Value"] = 23}
+local flyspeedb = {["Value"] = 23}
+local FlyStudTP = {["Value"] = 5 }
 local flyenabled
 local fly = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "Fly",
@@ -918,11 +1014,11 @@ local fly = Tabs["Blatant"]:CreateToggle({
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
                             local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
                             if SpaceHeld then
-                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0)
+                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, FlyStudTP["Value"], 0)
                                 task.wait()
                             end
                             if ShiftHeld then
-                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
                                 task.wait()
                             end
                         else
@@ -931,11 +1027,11 @@ local fly = Tabs["Blatant"]:CreateToggle({
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
                             local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
                             if SpaceHeld then
-                                hrp.CFrame = hrp.CFrame * CFrame.new(0, 15, 0)
+                                hrp.CFrame = hrp.CFrame * CFrame.new(0, FlyStudTP["Value"], 0)
                                 task.wait()
                             end
                             if ShiftHeld then
-                                hrp.CFrame = hrp.CFrame * CFrame.new(0, -15, 0)
+                                hrp.CFrame = hrp.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
                                 task.wait()
                             end
                         end
@@ -970,8 +1066,21 @@ flygravityb = fly:CreateSlider({
         end
         end,
         ["Min"] = 1,
-        ["Max"] = 10,
+        ["Max"] = 196,
         ["Default"] = 1,
+        ["Round"] = 0
+    })
+    
+FlyStudTP = fly:CreateSlider({
+        ["Name"] = "StudTP",
+        ["Function"] = function()
+        if flyenabled then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
+        end
+        end,
+        ["Min"] = 0,
+        ["Max"] = 15,
+        ["Default"] = 5,
         ["Round"] = 0
     })
 
@@ -1553,19 +1662,17 @@ function nuker()
     local beds = getbedsxd()
     for _,bed in pairs(beds) do
         local bedmagnitude = (bed.Position - game.Players.LocalPlayer.Character.PrimaryPart.Position).Magnitude
-        if bedmagnitude < 27 then
             local upnum = blocks(bed.Position)
             local x = math.round(bed.Position.X/3)
             local y = math.round(bed.Position.Y/3) + upnum
             local z = math.round(bed.Position.Z/3)
-            game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.DamageBlock:InvokeServer({
+            game:GetService("ReplicatedStorage").rbxts_include.node_modules["@rbxts"].net.out._NetManaged.DamageBlock:InvokeServer({
                 ["blockRef"] = {
                     ["blockPosition"] = Vector3.new(x,y,z)
                 },
                 ["hitPosition"] = Vector3.new(x,y,z),
                 ["hitNormal"] = Vector3.new(x,y,z),
             })
-        end
     end
 end
 
@@ -1587,9 +1694,9 @@ GravityValueBeb = gravBeb:CreateSlider({
         workspace.Gravity = GravityValueBeb["Value"]
         end,
         ["Min"] = 1,
-        ["Max"] = 1000,
+        ["Max"] = 200,
         ["Default"] = 196,
-        ["Round"] = 1
+        ["Round"] = 0
     })
 
 
@@ -1602,9 +1709,7 @@ Tabs["Utility"]:CreateToggle({
 			for i,v in pairs(workspace.ItemDrops:GetChildren()) do
 				if Character and Character.Humanoid.Health>0 and (v.Position-Character.HumanoidRootPart.Position).magnitude<=10 then
 					local x,y,z = math.ceil(v.Position.X/3),math.ceil(v.Position.Y/3),math.ceil(v.Position.Z/3)
-					coroutine.wrap(function()
 						RemoteFolder.PickupItemDrop:InvokeServer({itemDrop=v})
-					end)()
 				end
 			end
         else
@@ -1687,6 +1792,9 @@ Tabs["Render"]:CreateToggle({
 			Dragg = Instance.new("TextLabel")
 			ICorner_2 = Instance.new("UICorner")
 			
+			
+			screenien.Name = ("54674679857")
+			
 			Background.Name = "Background"
 			Background.Parent = screenien
 			Background.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
@@ -1732,8 +1840,8 @@ Tabs["Render"]:CreateToggle({
         end
     end
 })
---[[ not wroking lol
-Tabs["World"]:CreateToggle({
+--[[
+Tabs["Legit"]:CreateToggle({
     ["Name"] = "BedNuker",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -1754,6 +1862,76 @@ Tabs["World"]:CreateToggle({
 })
 ]]
 
+local LightingBrightness = {["Value"] = 2}
+local LightingSunRaysSpread = {["Value"] = 0.5}
+local LightingColorCorrectionContrast = {["Value"] = 0.01}
+local LightingColorCorrectinSaturation = {["Value"] = 0.1}
+local Light = Tabs["Render"]:CreateToggle({
+    ["Name"] = "Lighting",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+            local OldBrightness = game.Lighting.Brightness
+            local OldSunRaysSpread = game.Lighting.SunRays.Spread
+            local OldColorCorrectionContrast = game.Lighting.ColorCorrection.Contrast
+            local OldColorCorrectionSaturation = game.Lighting.ColorCorrection.Saturation
+        if v == true then
+            game.Lighting.Brightness = LightingBrightness["Value"]
+            game.Lighting.SunRays.Spread = LightingSunRaysSpread["Value"]
+            game.Lighting.ColorCorrection.Contrast = LightingColorCorrectionContrast["Value"]
+            game.Lighting.ColorCorrection.Saturation = LightingColorCorrectinSaturation["Value"]
+        else
+             game.Lighting.Brightness = OldBrightness
+             game.Lighting.SunRays.Spread = OldSunRaysSpread
+             game.Lighting.ColorCorrection.Contrast = OldColorCorrectionContrast
+             game.Lighting.ColorCorrection.Saturation = OldColorCorrectionSaturation    
+        end
+    end
+})
+
+LightingBrightness = Light:CreateSlider({
+        ["Name"] = "Brightness",
+        ["Function"] = function()
+        game.Lighting.Brightness = LightingBrightness["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 20,
+        ["Default"] = 3,
+        ["Round"] = 0
+    })
+    
+LightingSunRaysSpread = Light:CreateSlider({
+        ["Name"] = "SunRaysSpread",
+        ["Function"] = function()
+        game.Lighting.SunRays.Spread = LightingSunRaysSpread["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 10,
+        ["Default"] = 0.5,
+        ["Round"] = 1
+    })
+    
+LightingColorCorrectionContrast = Light:CreateSlider({
+        ["Name"] = "Cotrast",
+        ["Function"] = function()
+        game.Lighting.ColorCorrection.Contrast = LightingColorCorrectionContrast["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 10,
+        ["Default"] = 0.01,
+        ["Round"] = 2
+    })
+    
+LightingColorCorrectinSaturation = Light:CreateSlider({
+        ["Name"] = "Saturation",
+        ["Function"] = function()
+        game.Lighting.ColorCorrection.Saturation = LightingColorCorrectinSaturation["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 10,
+        ["Default"] = 0.1,
+        ["Round"] = 1
+    })
 createnotification("Mana", "Press N button on keyboard or press a button on left top of screen to toggle UI" , 10, true)
 
 CreateUIToggleButton()
+
