@@ -1695,6 +1695,7 @@ Tabs["Render"]:CreateToggle({
 			Background.Size = UDim2.new(0, 100, 0, 40)
 			Background.Draggable = true
 			Background.Active = true
+			Background.Selectable = true
 			
 			Text.Name = "Text"
 			Text.Parent = Background
