@@ -1870,20 +1870,22 @@ local Light = Tabs["Render"]:CreateToggle({
     ["Name"] = "Lighting",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
-            local OldBrightness = game.Lighting.Brightness
+            --[[local OldBrightness = game.Lighting.Brightness
             local OldSunRaysSpread = game.Lighting.SunRays.Spread
             local OldColorCorrectionContrast = game.Lighting.ColorCorrection.Contrast
             local OldColorCorrectionSaturation = game.Lighting.ColorCorrection.Saturation
+	    ]]
         if v == true then
             game.Lighting.Brightness = LightingBrightness["Value"]
             game.Lighting.SunRays.Spread = LightingSunRaysSpread["Value"]
             game.Lighting.ColorCorrection.Contrast = LightingColorCorrectionContrast["Value"]
             game.Lighting.ColorCorrection.Saturation = LightingColorCorrectinSaturation["Value"]
         else
-             game.Lighting.Brightness = OldBrightness
+             --[[game.Lighting.Brightness = OldBrightness
              game.Lighting.SunRays.Spread = OldSunRaysSpread
              game.Lighting.ColorCorrection.Contrast = OldColorCorrectionContrast
              game.Lighting.ColorCorrection.Saturation = OldColorCorrectionSaturation    
+	     ]]
         end
     end
 })
