@@ -283,9 +283,9 @@ end
 local function playdingsound(istrue) 
     if lib["Sounds"] then
         if istrue then
-            playsound(getcustomassetfuncforsounds("Mana/Assets/Sounds/click.mp3") or getasset("Mana/Assets/Sounds/click.mp3"))
+            playsound(getcustomassetfuncforsounds(("Mana/Assets/Sounds/click.mp3") or getasset("Mana/Assets/Sounds/click.mp3"))
         else
-            --playsound(getcustomassetfuncforsounds("Mana/Assets/Sounds/disable.mp3") or getasset("Mana/Sounds/disable.mp3"))
+            --playsound(getcustomassetfuncforsounds(("Mana/Assets/Sounds/disable.mp3") or getasset("Mana/Sounds/disable.mp3"))
         end
     end
 end
