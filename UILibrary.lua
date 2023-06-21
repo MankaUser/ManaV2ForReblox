@@ -505,14 +505,14 @@ function lib:CreateWindow()
                     playsound(true)
                 else
                     spawn(function()
-                        callback(true)
+                        callback("rbxassetid://13816922132", 1)
                     end)
                     spawn(function()
                         createnotification(title, "Enabled "..title, 4, true)
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
-                   playsound(true)
+                   playsound("rbxassetid://13816922132", 1)
                 end
             end
     
