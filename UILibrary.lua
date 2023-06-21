@@ -273,22 +273,15 @@ local function playsound(id, volume)
     local sound = Instance.new("Sound")
     sound.Parent = workspace
     sound.SoundId = id
-    sound.PlayOnRemove = true 
     if volume then 
         sound.Volume = volume
     end
+    sound:Play()
+    wait(2)
     sound:Destroy()
 end
 
-local function playdingsound(istrue) 
-    if lib["Sounds"] then
-        if istrue then
-            playsound("rbxassetid://13816922132", 1)
-        else
-            --playsound(getcustomassetfuncforsounds(("Mana/Assets/Sounds/disable.mp3") or getasset("Mana/Sounds/disable.mp3"))
-        end
-    end
-end
+
 
 local tabs = {}
 function lib:CreateWindow()
@@ -509,7 +502,7 @@ function lib:CreateWindow()
                         configtable[title]["IsToggled"] = false
                     end)
                     toggle.BackgroundColor3 = Color3.fromRGB(14, 20, 14)
-                    playdingsound(true)
+                    playsound(true)
                 else
                     spawn(function()
                         callback(true)
@@ -519,7 +512,7 @@ function lib:CreateWindow()
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
-                   playdingsound(true)
+                   playsound(true)
                 end
             end
     
