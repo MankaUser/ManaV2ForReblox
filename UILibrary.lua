@@ -502,7 +502,7 @@ function lib:CreateWindow()
                         configtable[title]["IsToggled"] = false
                     end)
                     toggle.BackgroundColor3 = Color3.fromRGB(14, 20, 14)
-                    playsound("rbxassetid://13816922132", 1)
+                    playsound("rbxassetid://421058925", 1)
                 else
                     spawn(function()
                         callback(true)
@@ -512,7 +512,7 @@ function lib:CreateWindow()
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
-                   playsound("rbxassetid://13816922132", 1)
+                   playsound("rbxassetid://421058925", 1)
                 end
             end
     
