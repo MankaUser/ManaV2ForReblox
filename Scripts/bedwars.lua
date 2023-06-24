@@ -458,7 +458,7 @@ local function getEquipped()
     local typetext = ""
     local obj = (entity.isAlive and lplr.Character:FindFirstChild("HandInvItem") and lplr.Character.HandInvItem.Value or nil)
     if obj then
-        if obj.Name:find("sword") or obj.Name:find("blade") or obj.Name:find("baguette") or obj.Name:find("scythe") or obj.Name:find("dao") then
+        if obj.Name:find("sword") or obj.Name:find("blade") or obj.Name:find("baguette") or obj.Name:find("scythe") or obj.Name:find("dao") or obj.Name:find("_stick") then
             typetext = "sword"
         end
         if obj.Name:find("wool") or itemtab[obj.Name]["block"] then
@@ -489,16 +489,24 @@ do
                     local mouse = game.Players.LocalPlayer:GetMouse()
                                 for i,v in pairs(game.Players:GetChildren()) do
                                 wait(0.01)
+                                --print("Got all players")
                                     if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+                                   -- print("Checked if player not lcplr")
                                          local mag = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                                         --print("Got magnitude")
                                         if mag <= DistVal["Value"] and v.Team ~= game.Players.LocalPlayer.Team and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+                                       -- print("Checked for mag")
 				                        task.wait(1/AttackSpeed["Value"])
+				                        --print("Waited")
+				                        local PlayerSword = getEquipped()["Type"]
+				                        --print("Got string," .. PlayerSword)
 				                            if getEquipped()["Type"] == "sword" then 
-				                                SwordCont:swingSwordAtMouse()
-				                 end
+				                            print("Got string," .. PlayerSword)
+				                               SwordCont:swingSwordAtMouse()
+				                         end
 				                     end
-				                        end
-				                           end
+				                 end
+				              end
 				                         
                     until (not v)
                 end)
@@ -879,9 +887,9 @@ do
     LJSpeed = lognjump:CreateSlider({
         ["Name"] = "Speed",
         ["Function"] = function() end,
-        ["Min"] = 45,
-        ["Max"] = 120,
-        ["Default"] = 70,
+        ["Min"] = 0,
+        ["Max"] = 23,
+        ["Default"] = 23,
         ["Round"] = 0
     })
 end
@@ -993,10 +1001,10 @@ Speedeb = SpeedobBeb:CreateSlider({
         ["Round"] = 0
     })
     
-
-local flygravityb = {["Value"] = 23}
+--[[
+local flygravityb = {["Value"] = 0}
 local flyspeedb = {["Value"] = 23}
-local FlyStudTP = {["Value"] = 5 }
+local FlyStudTP = {["Value"] = 5}
 local flyenabled
 local fly = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "Fly",
@@ -1004,11 +1012,13 @@ local fly = Tabs["Blatant"]:CreateToggle({
         ["Callback"] = function(v)
             flyenabled = v
             if flyenabled then
+            if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
                 spawn(function()
                     repeat
                         task.wait()
+                        if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
                         if clone then
-                            task.wait()
+                            -task.wait()
                             workspace.Gravity = flygravityb["Value"]
                             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
@@ -1021,11 +1031,16 @@ local fly = Tabs["Blatant"]:CreateToggle({
                                 clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
                                 task.wait()
                             end
+                            
+                            createnotification("Fly", "Disable CloneGodmodeFullDisabler to fly", 5, true)
                         else
+                          
                             task.wait()
                             workspace.Gravity = flygravityb["Value"]
+                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
                             local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
+                            if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
                             if SpaceHeld then
                                 hrp.CFrame = hrp.CFrame * CFrame.new(0, FlyStudTP["Value"], 0)
                                 task.wait()
@@ -1034,22 +1049,27 @@ local fly = Tabs["Blatant"]:CreateToggle({
                                 hrp.CFrame = hrp.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
                                 task.wait()
                             end
+                            end
+                        end
+                        end
                         end
                     until (not flyenabled)
                 end)
             else
                 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
                 workspace.Gravity = 196
-                --conectthingylol:Disconnect()
+                --print(connectthingylol)
+                --conectthingylol:Destroy()
             end
+        end
         end
     })
 
 flyspeedb = fly:CreateSlider({
         ["Name"] = "FlyWalkSpeed",
-        ["Function"] = function()
+        ["Function"] = function(v)
         if flyenabled then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
         end
         end,
         ["Min"] = 0,
@@ -1060,30 +1080,27 @@ flyspeedb = fly:CreateSlider({
     
 flygravityb = fly:CreateSlider({
         ["Name"] = "FlyGravity",
-        ["Function"] = function()
+        ["Function"] = function(v)
         if flyenabled then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
+        game.workspace.Gravity = v
         end
         end,
-        ["Min"] = 1,
+        ["Min"] = 0,
         ["Max"] = 196,
-        ["Default"] = 1,
+        ["Default"] = 0,
         ["Round"] = 0
     })
     
 FlyStudTP = fly:CreateSlider({
         ["Name"] = "StudTP",
         ["Function"] = function()
-        if flyenabled then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
-        end
         end,
         ["Min"] = 0,
         ["Max"] = 15,
         ["Default"] = 5,
         ["Round"] = 0
     })
-
+--]]
 local colorbox
 local function makeRainbowText(text)
     spawn(function()
@@ -1874,7 +1891,7 @@ local Light = Tabs["Render"]:CreateToggle({
             local OldSunRaysSpread = game.Lighting.SunRays.Spread
             local OldColorCorrectionContrast = game.Lighting.ColorCorrection.Contrast
             local OldColorCorrectionSaturation = game.Lighting.ColorCorrection.Saturation
-	    ]]
+            ]]
         if v == true then
             game.Lighting.Brightness = LightingBrightness["Value"]
             game.Lighting.SunRays.Spread = LightingSunRaysSpread["Value"]
@@ -1884,8 +1901,8 @@ local Light = Tabs["Render"]:CreateToggle({
              --[[game.Lighting.Brightness = OldBrightness
              game.Lighting.SunRays.Spread = OldSunRaysSpread
              game.Lighting.ColorCorrection.Contrast = OldColorCorrectionContrast
-             game.Lighting.ColorCorrection.Saturation = OldColorCorrectionSaturation    
-	     ]]
+             game.Lighting.ColorCorrection.Saturation = OldColorCorrectionSaturation  
+             ]]
         end
     end
 })
@@ -1937,3 +1954,4 @@ createnotification("Mana", "Press N button on keyboard or press a button on left
 
 CreateUIToggleButton()
 
+--1000
