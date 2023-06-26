@@ -5,4 +5,6 @@ if game.PlaceId == 6872274481 or game.PlaceId == 8560631822 or game.PlaceId == 8
  print("[Mana]: Loaded!")
 elseif game.PlaceId == 6872265039 then
 print("[Mana]: Lobby not supported yet")
- end
+else
+print("[Mana]: ManaV2 supports only bedwars matches for now")
+end
