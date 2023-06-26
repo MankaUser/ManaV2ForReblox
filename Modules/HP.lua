@@ -42,5 +42,5 @@
 			Dragg.TextSize = 14.000
 			
 			while wait (0.1) do
-			Text.Text = game.Players.LocalPlayer.Character.Humanoid.Health
+			Text.Text = game.Players.LocalPlayer.сharacter.Humanoid.Health
 			end
