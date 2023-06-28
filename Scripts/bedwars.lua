@@ -425,8 +425,8 @@ local Tabs = {
     ["Render"] = lib:CreateTab("Render",Color3.fromRGB(59, 170, 222)),
     ["Utility"] = lib:CreateTab("Utility",Color3.fromRGB(83, 214, 110)),
     ["World"] = lib:CreateTab("World",Color3.fromRGB(52,28,228)),
-    ["Legit"] = lib:CreateTab("LegitModules",Color3.fromRGB(196, 201, 95))--,
-  --["Misc"] = lib:CreateTab("Other",Color3.fromRGB(240, 157, 62))
+    --["Legit"] = lib:CreateTab("LegitModules",Color3.fromRGB(196, 201, 95)),
+    ["Misc"] = lib:CreateTab("Other",Color3.fromRGB(240, 157, 62))
     }
 
 -- COMBAT
@@ -501,7 +501,7 @@ do
 				                        local PlayerSword = getEquipped()["Type"]
 				                        --print("Got string," .. PlayerSword)
 				                            if getEquipped()["Type"] == "sword" then 
-				                            print("Got string," .. PlayerSword)
+				                            --print("Got string," .. PlayerSword)
 				                               SwordCont:swingSwordAtMouse()
 				                         end
 				                     end
@@ -529,14 +529,6 @@ do
                                                     for i, v in pairs(autoblockanim) do
                                                         coolanimlol = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
                                                         coolanimlol:Play()
-                                                        task.wait(v.Time - 0.01)
-                                                    end
-                                                end
-                                            elseif killauraanimval["Value"] == "German" then
-                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
-                                                    for i, v in pairs(funnyanim) do
-                                                        killauracurrentanim = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
-                                                        killauracurrentanim:Play()
                                                         task.wait(v.Time - 0.01)
                                                     end
                                                 end
@@ -592,18 +584,15 @@ do
     killauraanimval = katog:CreateDropDown({
         ["Name"] = "Anim",
         ["Function"] = function(val)
-            if val == "German" then
-                zdsqzd = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(0.5, -0.01, -1.91) * CFrame.Angles(math.rad(-51), math.rad(9), math.rad(56))})
-                zdsqzd:Play()
-            elseif val == "Penis" then
-                cock = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-1.8, 0.5, -1.01) * CFrame.Angles(math.rad(-90), math.rad(0), math.rad(-90))})
-                cock:Play()
-            elseif val == "KillMyself" then
+            if val == "KillMyself" then
                 sdfsdf = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
                 sdfsdf:Play()
+            elseif val == "Cool" then
+                 newewe = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
+                 newewe:Play()
             end
         end,
-        ["List"] = {"Cool", "German", "KillMyself"},
+        ["List"] = {"Cool", "KillMyself"},
         ["Default"] = "Cool"
     })
     animspeed = katog:CreateSlider({
@@ -724,7 +713,7 @@ Tabs["Combat"]:CreateToggle({
             if getgenv().funisus and entity.isAlive then
                 for i2,v2 in pairs(itemtable) do
                     if type(v2) == "table" and rawget(v2, "sword") then
-                        v2.sword.attackSpeed = 0.000000001
+                        v2.sword.attackSpeed = 0.0000000001
                     end
                     SwordCont.isClickingTooFast = function() return false end
                 end
@@ -896,6 +885,7 @@ end
 
 do
     local customlongjumpval = false
+    local LongJumpV2Gravity = {["Value"] = 23}
 local LongJumpV2 = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "LongJumpV2",
         ["Keybind"] = nil,
@@ -977,7 +967,7 @@ end
             end
         end
     })
-
+local jumpbeb = {["Value"] = 23}
 SpeedobBeb = Tabs["Blatant"]:CreateToggle({
     ["Name"] = "Speed",
     ["Keybind"] = nil,
@@ -1001,6 +991,17 @@ Speedeb = SpeedobBeb:CreateSlider({
         ["Round"] = 0
     })
     
+jumpbeb = SpeedobBeb:CreateSlider({
+        ["Name"] = "JumpPower",
+        ["Function"] = function()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpbeb["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 1000,
+        ["Default"] = 100,
+        ["Round"] = 0
+    })
+    
 --[[
 local flygravityb = {["Value"] = 0}
 local flyspeedb = {["Value"] = 23}
@@ -1018,7 +1019,8 @@ local fly = Tabs["Blatant"]:CreateToggle({
                         task.wait()
                         if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
                         if clone then
-                            -task.wait()
+                            
+                            task.wait()
                             workspace.Gravity = flygravityb["Value"]
                             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
                             local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
@@ -1100,7 +1102,27 @@ FlyStudTP = fly:CreateSlider({
         ["Default"] = 5,
         ["Round"] = 0
     })
---]]
+]]
+
+
+local flightenabled
+local flyght = Tabs["Blatant"]:CreateToggle({
+        ["Name"] = "Flight",
+        ["Keybind"] = nil,
+        ["Callback"] = function(v)
+            flightenabled = v
+            if flightenabled == true then
+                spawn(function()
+                    repeat
+                        task.wait()
+                        workspace.Gravity = 0
+                    until (not flyenabled == true)
+                end)
+            elseif flightenabled == false then
+                workspace.Gravity = 196
+            end
+        end
+    })
 local colorbox
 local function makeRainbowText(text)
     spawn(function()
@@ -1202,7 +1224,7 @@ Tabs["Render"]:CreateToggle({
 
 
 local ScreenGuie
-Tabs["Legit"]:CreateToggle({
+Tabs["Misc"]:CreateToggle({
     ["Name"] = "KeyStrokes",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
@@ -1382,8 +1404,8 @@ Tabs["World"]:CreateToggle({
             antivoidpart.Position = Vector3.new(160.5, 25, 247.5)
             antivoidpart.Transparency = 0.4
             antivoidpart.Anchored = true
-            antivoidpart.Touched:connect(function(dumbcocks)
-                if dumbcocks.Parent:WaitForChild("Humanoid") and dumbcocks.Parent.Name == lplr.Name then
+            antivoidpart.Touched:connect(function(thing)
+                if dumbcocks.Parent:WaitForChild("Humanoid") and thing.Parent.Name == lplr.Name then
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                     wait(0.2)
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
@@ -1468,7 +1490,7 @@ Tabs["Utility"]:CreateToggle({
     do
         local rainbowenab = {["Value"] = false}
         local rainbowspeed = {["Value"] = 4.5}
-        local clcickgui = Tabs["Rektsky"]:CreateToggle({
+        local clcickgui = Tabs["Misc"]:CreateToggle({
             ["Name"] = "ClickGui",
             ["Keybind"] = nil,
             ["Callback"] = function(v) end
@@ -1488,6 +1510,7 @@ Tabs["Utility"]:CreateToggle({
             ["Round"] = 1
         })
     end
+
 ]]
 
 --[[
@@ -1887,22 +1910,13 @@ local Light = Tabs["Render"]:CreateToggle({
     ["Name"] = "Lighting",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
-            --[[local OldBrightness = game.Lighting.Brightness
-            local OldSunRaysSpread = game.Lighting.SunRays.Spread
-            local OldColorCorrectionContrast = game.Lighting.ColorCorrection.Contrast
-            local OldColorCorrectionSaturation = game.Lighting.ColorCorrection.Saturation
-            ]]
         if v == true then
             game.Lighting.Brightness = LightingBrightness["Value"]
             game.Lighting.SunRays.Spread = LightingSunRaysSpread["Value"]
             game.Lighting.ColorCorrection.Contrast = LightingColorCorrectionContrast["Value"]
             game.Lighting.ColorCorrection.Saturation = LightingColorCorrectinSaturation["Value"]
         else
-             --[[game.Lighting.Brightness = OldBrightness
-             game.Lighting.SunRays.Spread = OldSunRaysSpread
-             game.Lighting.ColorCorrection.Contrast = OldColorCorrectionContrast
-             game.Lighting.ColorCorrection.Saturation = OldColorCorrectionSaturation  
-             ]]
+
         end
     end
 })
@@ -1950,8 +1964,184 @@ LightingColorCorrectinSaturation = Light:CreateSlider({
         ["Default"] = 0.1,
         ["Round"] = 1
     })
-createnotification("Mana", "Press N button on keyboard or press a button on left top of screen to toggle UI" , 10, true)
+--[[    
+local TPValue = {["Value"] = 5}
+local AntiRusher = Tabs["Utility"]:CreateToggle({
+    ["Name"] = "ForwardTP",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v == true then
+            game.Players.LocalPlayer.character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.character.HumanoidRootPart.CFrame + Vector3.new(TPValue["Value"], 0, 0)
+        else
+
+        end
+    end
+})
+
+TPValue = AntiRusher:CreateSlider({
+        ["Name"] = "Studs",
+        ["Function"] = function()
+        game.Lighting.Brightness = LightingBrightness["Value"]
+        end,
+        ["Min"] = 0,
+        ["Max"] = 10,
+        ["Default"] = 5,
+        ["Round"] = 0
+    })
+  ]]  
+local StatsUpdateDelay = {["Value"] = 0.5}
+--local VisibleDraggFrame = {["Value"] = true}
+local statem = Tabs["Misc"]:CreateToggle({
+    ["Name"] = "MatchState",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v == true then
+             a = game:GetService("CoreGui"):FindFirstChild("MatchA_StateB")
+            if a then
+               a.Enabled = true
+            else
+	            local MatchState = Instance.new("ScreenGui")
+				MainBackground = Instance.new("Frame")
+				local Frame_Corner = Instance.new("UICorner")
+				local Terrible_Tittle = Instance.new("TextLabel")
+				local Tittle_Corner = Instance.new("UICorner")
+				local UIGradient = Instance.new("UIGradient")
+				local Kills_label = Instance.new("TextLabel")
+				local Bed_label = Instance.new("TextLabel")
+				local Skulls_label = Instance.new("TextLabel")
+				--local Map_label = Instance.new("TextLabel")
+				local UIListLayout = Instance.new("UIListLayout")
+				
+				local stats = game.Players.LocalPlayer.leaderstats
+				
+				MatchState.Name = "MatchA_StateB"
+				MatchState.Parent = game:GetService("CoreGui")
+				MatchState.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				
+				MainBackground.Name = "MainBackground"
+				MainBackground.Parent = MatchState
+				MainBackground.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+				MainBackground.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				MainBackground.BorderSizePixel = 0
+				MainBackground.BackgroundTransparency = 1
+				MainBackground.Position = UDim2.new(0, 0, 0.316799998, 0)
+				MainBackground.Size = UDim2.new(0, 150, 0, 130)
+				MainBackground.Active = true
+				MainBackground.Draggable = true
+				
+				Frame_Corner.CornerRadius = UDim.new(0, 4)
+				Frame_Corner.Name = "Frame_Corner"
+				Frame_Corner.Parent = MainBackground
+				
+				Terrible_Tittle.Name = "Tittle"
+				Terrible_Tittle.Parent = MainBackground
+				Terrible_Tittle.Active = true
+				Terrible_Tittle.BackgroundColor3 = Color3.fromRGB(141, 255, 121)
+				Terrible_Tittle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Terrible_Tittle.BorderSizePixel = 0
+				Terrible_Tittle.ClipsDescendants = true
+				Terrible_Tittle.Size = UDim2.new(0, 150, 0, 25)
+				Terrible_Tittle.Font = Enum.Font.Gotham
+				Terrible_Tittle.Text = ""
+				Terrible_Tittle.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Terrible_Tittle.TextSize = 20.000
+				Terrible_Tittle.BackgroundTransparency = 0.7
+				
+				Tittle_Corner.CornerRadius = UDim.new(0, 4)
+				Tittle_Corner.Name = "Tittle_Corner"
+				Tittle_Corner.Parent = Terrible_Tittle
+				
+				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(213, 213, 213)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(213, 213, 213))}
+				UIGradient.Parent = MainBackground
+				
+				Kills_label.Name = "Ks"
+				Kills_label.Parent = MainBackground
+				Kills_label.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+				--Kills_label.BackgroundTransparency = 0.500
+				Kills_label.BorderColor3 = Color3.fromRGB(134, 134, 134)
+				Kills_label.Position = UDim2.new(0, 0, 0.139999986, 0)
+				Kills_label.Size = UDim2.new(0, 150, 0, 25)
+				Kills_label.Font = Enum.Font.Gotham
+				Kills_label.Text = "Kills: nil"
+				Kills_label.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Kills_label.TextSize = 18.000
+				Kills_label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+				
+				Bed_label.Name = "Bedededed_label"
+				Bed_label.Parent = MainBackground
+				Bed_label.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+				--Bed_label.BackgroundTransparency = 0.500
+				Bed_label.BorderColor3 = Color3.fromRGB(134, 134, 134)
+				Bed_label.Position = UDim2.new(0, 0, 0.265000015, 0)
+				Bed_label.Size = UDim2.new(0, 150, 0, 25)
+				Bed_label.Font = Enum.Font.Gotham
+				Bed_label.Text = "Bed: nil"
+				Bed_label.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Bed_label.TextSize = 18.000
+				Bed_label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+				
+				Skulls_label.Name = "Skulls_label"
+				Skulls_label.Parent = MainBackground
+				Skulls_label.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+				--Skulls_label.BackgroundTransparency = 0.500
+				Skulls_label.BorderColor3 = Color3.fromRGB(134, 134, 134)
+				Skulls_label.Position = UDim2.new(0, 0, 0.400000006, 0)
+				Skulls_label.Size = UDim2.new(0, 150, 0, 25)
+				Skulls_label.Font = Enum.Font.Gotham
+				Skulls_label.Text = "Skulls: nil"
+				Skulls_label.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Skulls_label.TextSize = 18.000
+				Skulls_label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+				
+				--[[
+				Map_label.Name = "Mapep_label"
+				Map_label.Parent = MainBackground
+				Map_label.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+				Map_label.BackgroundTransparency = 0.500
+				Map_label.BorderColor3 = Color3.fromRGB(134, 134, 134)
+				Map_label.Position = UDim2.new(0, 0, 0.524999976, 0)
+				Map_label.Size = UDim2.new(0, 150, 0, 25)
+				Map_label.Font = Enum.Font.Gotham
+				Map_label.Text = "Map: nil"
+				Map_label.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Map_label.TextSize = 18.000
+				Map_label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+				--]]
+				
+				UIListLayout.Parent = MainBackground
+				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+				UIListLayout.Padding = UDim.new(0, 0)
+				
+				while wait(StatsUpdateDelay["Value"]) do
+				Kills_label.Text = "Kills: ".. stats.Kills.Value
+				Bed_label.Text = "Bed: ".. stats.Bed.Value
+				Skulls_label.Text = "Skulls: ".. stats.Skulls.Value
+				end
+
+            end
+        else
+        game:GetService("CoreGui"):FindFirstChild("MatchA_StateB").Enabled = false
+        end
+    end
+})
+
+    StatsUpdateDelay = statem:CreateSlider({
+        ["Name"] = "UpdateDelay",
+        ["Function"] = function() end,
+        ["Min"] = 0.1,
+        ["Max"] = 10,
+        ["Default"] = 1,
+        ["Round"] = 1
+    })
+    --[[ code no work lol
+    VisibleDraggFrame = statem:CreateOptionTog({
+        ["Name"] = "Dragg button",
+        ["Default"] = true,
+        ["Func"] = function()
+        end
+        
+    })
+    ]]
+createnotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
 
 CreateUIToggleButton()
-
---1000
