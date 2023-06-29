@@ -4,4 +4,4 @@ Using UI Library from rektsky4roblox, because i'm lazy to create another library
 <br>
 <br>
 # Current best features in ManaV2
-<br> Nothing
+Nothing
