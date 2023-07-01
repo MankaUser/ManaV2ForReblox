@@ -167,6 +167,62 @@ function lib:ToggleLib()
         end
     end
 end
+
+function lib:CreateUIToggleButton()
+	screenien = Instance.new("ScreenGui", game:GetService("CoreGui"))
+	Background = Instance.new("Frame")
+	Text = Instance.new("TextButton")
+	UICorner = Instance.new("UICorner")
+	Dragg = Instance.new("TextLabel")
+	ICorner_2 = Instance.new("UICorner")
+	
+	screenien.Name = ("54687")
+	
+	Background.Name = "Background"
+	Background.Parent = screenien
+	Background.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+	Background.BackgroundTransparency = 1.000
+	Background.Position = UDim2.new(0.0920729373, 0, 0.0988000023, 0)
+	Background.Size = UDim2.new(0, 100, 0, 40)
+	Background.Draggable = true
+	Background.Active = true
+	Background.Selectable = true
+	
+	Text.Name = "Text"
+	Text.Parent = Background
+	Text.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+	Text.BackgroundTransparency = 0.500
+	Text.BorderSizePixel = 0
+	Text.Position = UDim2.new(0.400000006, 0, 0, 0)
+	Text.Size = UDim2.new(0, 60, 0, 40)
+	Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Text.TextSize = 15.000
+	Text.Text = "Mana"
+	
+	UICorner.CornerRadius = UDim.new(0, 3)
+	UICorner.Parent = Text
+	
+	Dragg.Name = "Dragg"
+	Dragg.Parent = Background
+	Dragg.BackgroundColor3 = Color3.fromRGB(141, 255, 121)
+	Dragg.BackgroundTransparency = 0.500
+	Dragg.BorderSizePixel = 0
+	Dragg.Position = UDim2.new(0.0599999987, 0, 0, 0)
+	Dragg.Size = UDim2.new(0, 35, 0, 40)
+	Dragg.Font = Enum.Font.SourceSans
+	Dragg.Text = ""
+	Dragg.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Dragg.TextSize = 14.000
+	
+	Text.MouseButton1Click:Connect(function()
+	if game.CoreGui.ScreenGui.Enabled == false then
+	game.CoreGui.ScreenGui.Enabled = true
+	elseif game.CoreGui.ScreenGui.Enabled == true then
+	game.CoreGui.ScreenGui.Enabled = false
+	end
+	end)
+end
+
 local uis = game:GetService("UserInputService")
 local input = game:GetService("UserInputService")
 local ms = game.Players.LocalPlayer:GetMouse()
@@ -175,7 +231,7 @@ local tweens = {Notification = function(base)
     ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
 
---createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
+--lib:createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
 local function dragGUI(gui, dragpart)
     spawn(function()
         local dragging
@@ -499,7 +555,7 @@ function lib:CreateWindow()
                         callback(false)
                     end)
                     spawn(function()
-                        createnotification(title, "Disabled "..title, 4, false)
+                        lib:createnotification(title, "Disabled "..title, 4, false)
                         configtable[title]["IsToggled"] = false
                     end)
                     toggle.BackgroundColor3 = Color3.fromRGB(14, 20, 14)
@@ -509,7 +565,7 @@ function lib:CreateWindow()
                         callback(true)
                     end)
                     spawn(function()
-                        createnotification(title, "Enabled "..title, 4, true)
+                        lib:createnotification(title, "Enabled "..title, 4, true)
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
@@ -713,7 +769,7 @@ function lib:CreateWindow()
                         dropdownapi.Select(newindex)
                     else
                         warn("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!,")
-                        createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
+                        lib:createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
                     end
                 end
 
@@ -724,7 +780,7 @@ function lib:CreateWindow()
                         dropdownapi.Select(newindex)
                     else
                         warn("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!")
-                            createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
+                            lib:createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
                     end
                 end
     			if configtable[ddname] and configtable[ddname]["Value"] then
@@ -820,7 +876,8 @@ end
 lib:ToggleLib()
 uis.InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.N then
-        lib:ToggleLib()
+        --lib:ToggleLib()
     end
+      
 end) 
 return lib
