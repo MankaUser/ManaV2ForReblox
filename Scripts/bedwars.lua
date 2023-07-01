@@ -2095,6 +2095,6 @@ local statem = Tabs["Misc"]:CreateToggle({
         
     })
     ]]
-createnotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
+lib:createnotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
 
-CreateUIToggleButton()
+lib:CreateUIToggleButton()
