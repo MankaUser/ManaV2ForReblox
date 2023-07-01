@@ -1,13 +1,18 @@
 repeat task.wait() until game:IsLoaded()
 
+local uis = game:GetService("UserInputService")
+local input = game:GetService("UserInputService")
+local ms = game.Players.LocalPlayer:GetMouse()
+local ts = game:GetService("TweenService")
+
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/UILibrary.lua"))()
 
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
 
-local whiteliststhing = {}
+--local whiteliststhing = {}
 
-whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+--whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
 
 do
     local oldcharacteradded = entity.characterAdded
@@ -25,63 +30,9 @@ local getasset = getsynasset or getcustomasset
 
 local ScreenGuitwo = game.CoreGui.ManaNotificationGui
 
-local uis = game:GetService("UserInputService")
-local input = game:GetService("UserInputService")
-local ms = game.Players.LocalPlayer:GetMouse()
-local ts = game:GetService("TweenService")
 local tweens = {Notification = function(base)
     ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
-local Background
-local function createnotification(title, text, delay2, toggled)
-    spawn(function()
-        if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
-        local frame = Instance.new("Frame")
-        frame.Size = UDim2.new(0, 100, 0, 115)
-        frame.Position = UDim2.new(0.5, 0, 0, -115)
-        frame.BorderSizePixel = 0
-        frame.AnchorPoint = Vector2.new(0.5, 0)
-        frame.BackgroundTransparency = 0.5
-        frame.BackgroundColor3 = Color3.new(0, 0, 0)
-        frame.Name = "Background"
-        frame.Parent = ScreenGuitwo
-        local frameborder = Instance.new("Frame")
-        frameborder.Size = UDim2.new(1, 0, 0, 8)
-        frameborder.BorderSizePixel = 0
-        frameborder.BackgroundColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
-        frameborder.Parent = frame
-        local frametitle = Instance.new("TextLabel")
-        frametitle.Font = Enum.Font.SourceSansLight
-        frametitle.BackgroundTransparency = 1
-        frametitle.Position = UDim2.new(0, 0, 0, 30)
-        frametitle.TextColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
-        frametitle.Size = UDim2.new(1, 0, 0, 28)
-        frametitle.Text = "          "..title
-        frametitle.TextSize = 24
-        frametitle.TextXAlignment = Enum.TextXAlignment.Left
-        frametitle.TextYAlignment = Enum.TextYAlignment.Top
-        frametitle.Parent = frame
-        local frametext = Instance.new("TextLabel")
-        frametext.Font = Enum.Font.SourceSansLight
-        frametext.BackgroundTransparency = 1
-        frametext.Position = UDim2.new(0, 0, 0, 68)
-        frametext.TextColor3 = Color3.new(1, 1, 1)
-        frametext.Size = UDim2.new(1, 0, 0, 28)
-        frametext.Text = "          "..text
-        frametext.TextSize = 24
-        frametext.TextXAlignment = Enum.TextXAlignment.Left
-        frametext.TextYAlignment = Enum.TextYAlignment.Top
-        frametext.Parent = frame
-        local textsize = game:GetService("TextService"):GetTextSize(frametitle.Text, frametitle.TextSize, frametitle.Font, Vector2.new(100000, 100000))
-        local textsize2 = game:GetService("TextService"):GetTextSize(frametext.Text, frametext.TextSize, frametext.Font, Vector2.new(100000, 100000))
-        if textsize2.X > textsize.X then textsize = textsize2 end
-        frame.Size = UDim2.new(0, textsize.X + 38, 0, 115)
-        pcall(function()
-            frame:TweenPosition(UDim2.new(0.5, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.15)
-            game:GetService("Debris"):AddItem(frame, delay2 + 0.15)
-        end)
-    end)
-end
 
 local Keystrokes = {}
 local keys = {}
@@ -927,8 +878,10 @@ SpeedobBeb = Tabs["Blatant"]:CreateToggle({
     ["Callback"] = function(v)
         if v == true then
              game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
+             game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpbeb["Value"]
         else
              game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+             game.Players.LocalPlayer.Character.Humanoid.JumpPower = 23
         end
     end
 })
@@ -950,8 +903,8 @@ jumpbeb = SpeedobBeb:CreateSlider({
         game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpbeb["Value"]
         end,
         ["Min"] = 0,
-        ["Max"] = 1000,
-        ["Default"] = 100,
+        ["Max"] = 100,
+        ["Default"] = 23,
         ["Round"] = 0
     })
     
@@ -1942,6 +1895,7 @@ TPValue = AntiRusher:CreateSlider({
         ["Round"] = 0
     })
   ]]  
+do
 local StatsUpdateDelay = {["Value"] = 0.5}
 --local VisibleDraggFrame = {["Value"] = true}
 local statem = Tabs["Misc"]:CreateToggle({
@@ -2066,9 +2020,9 @@ local statem = Tabs["Misc"]:CreateToggle({
 				UIListLayout.Padding = UDim.new(0, 0)
 				
 				while wait(StatsUpdateDelay["Value"]) do
-				Kills_label.Text = "Kills: ".. stats.Kills.Value
-				Bed_label.Text = "Bed: ".. stats.Bed.Value
-				Skulls_label.Text = "Skulls: ".. stats.Skulls.Value
+					Kills_label.Text = "Kills: ".. stats.Kills.Value
+					Bed_label.Text = "Bed: ".. stats.Bed.Value
+					Skulls_label.Text = "Skulls: ".. stats.Skulls.Value
 				end
 
             end
@@ -2095,6 +2049,200 @@ local statem = Tabs["Misc"]:CreateToggle({
         
     })
     ]]
+end
+do   
+local EnableNotifications = {["Value"] = true}
+local LibrarySettings = Tabs["Misc"]:CreateToggle({
+    ["Name"] = "LibrarySettings",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v then
+
+        else
+
+        end
+    end
+})
+
+    EnableNotification = LibrarySettings:CreateOptionTog({
+        ["Name"] = "Notifications",
+        ["Default"] = true,
+        ["Func"] = function(v)
+        lib["Notifications"] = v
+        end
+        
+    })
+    
+    RainbowLib = LibrarySettings:CreateOptionTog({
+        ["Name"] = "Rainbow",
+        ["Default"] = true,
+        ["Func"] = function(v)
+        lib["Rainbow"] = v
+        end
+        
+    })
+    
+    LibSounds = LibrarySettings:CreateOptionTog({
+        ["Name"] = "Sounds",
+        ["Default"] = true,
+        ["Func"] = function(v)
+        lib["Sounds"] = v
+        end
+        
+    })
+end
+
+uninject = Tabs["Misc"]:CreateToggle({
+    ["Name"] = "Uninject",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v then
+	        a = game:GetService("CoreGui").ManaV2
+            b = game:GetService("CoreGui").ManaNotificationGui
+            c = game:GetService("CoreGui")["54687"] 
+            e = game:GetService("CoreGui"):FindFirstChild("54674679857")
+            if a then a:Destroy() end
+            if b then b:Destroy() end
+            if c then c:Destroy() end
+            if e then e:Destroy() end
+            uninject:silentToggle()
+        else
+
+        end
+    end
+})
+
+
+do
+local OldFov = game.Workspace.Camera.FieldOfView
+local NewFov = {["Value"] = 80}
+local FovChanger = Tabs["Render"]:CreateToggle({
+    ["Name"] = "FovChanger",
+    ["Keybind"] = nil,
+    ["Callback"] = function(v)
+        if v then
+	        game.Workspace.Camera.FieldOfView = NewFov["Value"]
+        else
+            game.Workspace.Camera.FieldOfView = OldFov
+        end
+    end
+})
+
+NewFov = FovChanger:CreateSlider({
+        ["Name"] = "Field Of View",
+        ["Function"] = function(v)
+        game.Workspace.Camera.FieldOfView = v or NewFov["Value"]
+        end,
+        ["Min"] = 1,
+        ["Max"] = 150,
+        ["Default"] = 80,
+        ["Round"] = 0
+    })
+
+end
+
+do
+   -- local sayinchat = {["Value"] = false}
+    local notificationsenabled = {["Value"] = true}
+    local autoreport = false
+    local autoreportthingy = Tabs["Utility"]:CreateToggle({
+        ["Name"] = "AutoReport",
+        ["Keybind"] = nil,
+        ["Callback"] = function(v)
+            autoreport = v
+            if autoreport then
+                local reporttable = {
+                    ["ez"] = "Bullying",
+                    ["gay"] = "Bullying",
+                    ["gae"] = "Bullying",
+                    ["hacks"] = "Scamming",
+                    ["hacker"] = "Scamming",
+                    ["hack"] = "Scamming",
+                    ["cheat"] = "Scamming",
+                    ["hecker"] = "Scamming",
+                    ["get a life"] = "Bullying",
+                    ["L"] = "Bullying",
+                    ["thuck"] = "Swearing",
+                    ["thuc"] = "Swearing",
+                    ["thuk"] = "Swearing",
+                    ["fatherless"] = "Bullying",
+                    ["yt"] = "Offsite Links",
+                    ["discord"] = "Offsite Links",
+                    ["dizcourde"] = "Offsite Links",
+                    ["retard"] = "Swearing",
+                    ["tiktok"] = "Offsite Links",
+                    ["bad"] = "Bullying",
+                    ["trash"] = "Bullying",
+                    ["die"] = "Bullying",
+                    ["lobby"] = "Bullying",
+                    ["ban"] = "Bullying",
+                    ["youtube"] = "Offsite Links",
+                    ["im hacking"] = "Cheating/Exploiting",
+                    ["I'm hacking"] = "Cheating/Exploiting",
+                    ["download"] = "Offsite Links",
+                    ["kill your"] = "Bullying",
+                    ["kys"] = "Bullying",
+                    ["hack to win"] = "Bullying",
+                    ["bozo"] = "Bullying",
+                    ["kid"] = "Bullying",
+                    ["adopted"] = "Bullying",
+                    ["vxpe"] = "Cheating/Exploiting",
+                    ["futureclient"] = "Cheating/Exploiting",
+                    ["nova6"] = "Cheating/Exploiting",
+                    [".gg"] = "Offsite Links",
+                    ["gg"] = "Offsite Links",
+                    ["lol"] = "Bullying",
+                    ["suck"] = "Dating",
+                    ["love"] = "Dating",
+                    ["fuck"] = "Swearing",
+                    ["sthu"] = "Swearing",
+                    ["i hack"] = "Cheating/Exploiting",
+                    ["disco"] = "Offsite Links",
+                    ["dc"] = "Offsite Links"
+                }
+                function getreport(msg)
+                    for i,v in pairs(reporttable) do 
+                        if msg:lower():find(i) then 
+                            return v
+                        end
+                    end
+                    return nil
+                end
+                for i, v in pairs(game.Players:GetPlayers()) do
+                    --if v.Name ~= lplr.Name then
+                        v.Chatted:connect(function(msg)
+                            local reportfound = getreport(msg)
+                            if reportfound then
+                                --[[
+                                if sayinchat["Value"] then
+                                    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Reported " .. v.Name .. " for " .. reportfound, 'All')
+                                end
+                                ]]
+                                game.Players:ReportAbuse(v, reportfound, 'He said "' .. msg .. '", was very offensive to me')
+                                if notificationsenabled["Value"] then
+                                    print("Reported" .. v.Name, "for saying " .. msg)
+                                    createnotification("Reported" .. v.Name, "for saying " .. msg, 5, true)
+                                end
+                            end
+                        end)
+                    --end
+                end
+            end
+        end
+    })
+    --[[sayinchat = autoreportthingy:CreateOptionTog({
+        ["Name"] = "Say reports in chat",
+        ["Default"] = false,
+        ["Func"] = function() end
+    })
+    ]]
+    notificationsenabled = autoreportthingy:CreateOptionTog({
+        ["Name"] = "Notifications",
+        ["Default"] = true,
+        ["Func"] = function() end
+    })
+end
+
 lib:createnotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
 
 lib:CreateUIToggleButton()
