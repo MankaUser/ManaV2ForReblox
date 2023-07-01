@@ -77,6 +77,7 @@ local optionframe
 local TabsFrame
 ScreenGui.Parent = game:WaitForChild("CoreGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Name = "ManaV2"
 local ScreenGuitwo = Instance.new("ScreenGui")
 ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
 ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
