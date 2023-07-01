@@ -1,7 +1,7 @@
 repeat task.wait() until game:IsLoaded()
 
 local lib = {
-    ["Rainbow"] = true,
+    ["Rainbow"] = false,
     ["Notifications"] = false,
     ["Sounds"] = true,
     ["GuiKeybind"] = "RightShift",
