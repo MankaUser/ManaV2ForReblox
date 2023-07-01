@@ -381,15 +381,17 @@ local function dragGUI(gui, dragpart)
 end
 
 local function playsound(id, volume) 
-    local sound = Instance.new("Sound")
-    sound.Parent = workspace
-    sound.SoundId = id
-    if volume then 
-        sound.Volume = volume
-    end
-    sound:Play()
-    wait(2)
-    sound:Destroy()
+      if lib["Sounds"] == true then
+	    local sound = Instance.new("Sound")
+	    sound.Parent = workspace
+	    sound.SoundId = id
+	    if volume then 
+	        sound.Volume = volume
+	    end
+	    sound:Play()
+	    wait(2)
+	    sound:Destroy()
+      end
 end
 
 
