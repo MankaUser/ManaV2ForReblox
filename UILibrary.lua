@@ -290,7 +290,7 @@ local tweens = {Notification = function(base)
     ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
 local Background
-local function lib:createnotification(title, text, delay2, toggled)
+function lib:createnotification(title, text, delay2, toggled)
     spawn(function()
         if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
         local frame = Instance.new("Frame")
