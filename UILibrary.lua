@@ -332,10 +332,10 @@ function lib:CreateUIToggleButton()
     Dragg.TextSize = 14.000
 
     Text.MouseButton1Click:Connect(function()
-    if game.CoreGui.ScreenGui.Enabled == false then
-	    game.CoreGui.ScreenGui.Enabled = true
-    elseif game.CoreGui.ScreenGui.Enabled == true then
-	    game.CoreGui.ScreenGui.Enabled = false
+    if game.CoreGui.ManaV2.Enabled == false then
+	    game.CoreGui.ManaV2.Enabled = true
+    elseif game.CoreGui.ManaV2.Enabled == true then
+	    game.CoreGui.ManaV2.Enabled = false
     end
     end)
 end
