@@ -179,6 +179,7 @@ local tweens = {Notification = function(base)
     ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
 local Background
+
 local function createnotification(title, text, delay2, toggled)
     spawn(function()
         if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
@@ -228,6 +229,112 @@ local function createnotification(title, text, delay2, toggled)
         end)
     end)
 end
+
+function lib:createnotification(title, text, delay2, toggled)
+    spawn(function()
+        if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(0, 100, 0, 115)
+        frame.Position = UDim2.new(0.5, 0, 0, -115)
+        frame.BorderSizePixel = 0
+        frame.AnchorPoint = Vector2.new(0.5, 0)
+        frame.BackgroundTransparency = 0.5
+        frame.BackgroundColor3 = Color3.new(0, 0, 0)
+        frame.Name = "Background"
+        frame.Parent = ScreenGuitwo
+        local frameborder = Instance.new("Frame")
+        frameborder.Size = UDim2.new(1, 0, 0, 8)
+        frameborder.BorderSizePixel = 0
+        frameborder.BackgroundColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
+        frameborder.Parent = frame
+        local frametitle = Instance.new("TextLabel")
+        frametitle.Font = Enum.Font.SourceSansLight
+        frametitle.BackgroundTransparency = 1
+        frametitle.Position = UDim2.new(0, 0, 0, 30)
+        frametitle.TextColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
+        frametitle.Size = UDim2.new(1, 0, 0, 28)
+        frametitle.Text = "          "..title
+        frametitle.TextSize = 24
+        frametitle.TextXAlignment = Enum.TextXAlignment.Left
+        frametitle.TextYAlignment = Enum.TextYAlignment.Top
+        frametitle.Parent = frame
+        local frametext = Instance.new("TextLabel")
+        frametext.Font = Enum.Font.SourceSansLight
+        frametext.BackgroundTransparency = 1
+        frametext.Position = UDim2.new(0, 0, 0, 68)
+        frametext.TextColor3 = Color3.new(1, 1, 1)
+        frametext.Size = UDim2.new(1, 0, 0, 28)
+        frametext.Text = "          "..text
+        frametext.TextSize = 24
+        frametext.TextXAlignment = Enum.TextXAlignment.Left
+        frametext.TextYAlignment = Enum.TextYAlignment.Top
+        frametext.Parent = frame
+        local textsize = game:GetService("TextService"):GetTextSize(frametitle.Text, frametitle.TextSize, frametitle.Font, Vector2.new(100000, 100000))
+        local textsize2 = game:GetService("TextService"):GetTextSize(frametext.Text, frametext.TextSize, frametext.Font, Vector2.new(100000, 100000))
+        if textsize2.X > textsize.X then textsize = textsize2 end
+        frame.Size = UDim2.new(0, textsize.X + 38, 0, 115)
+        pcall(function()
+            frame:TweenPosition(UDim2.new(0.5, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.15)
+            game:GetService("Debris"):AddItem(frame, delay2 + 0.15)
+        end)
+    end)
+end
+
+function lib:CreateUIToggleButton()
+    screenien = Instance.new("ScreenGui", game:GetService("CoreGui"))
+    Background = Instance.new("Frame")
+    Text = Instance.new("TextButton")
+    UICorner = Instance.new("UICorner")
+    Dragg = Instance.new("TextLabel")
+    ICorner_2 = Instance.new("UICorner")
+
+    screenien.Name = ("54687")
+
+    Background.Name = "Background"
+    Background.Parent = screenien
+    Background.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+    Background.BackgroundTransparency = 1.000
+    Background.Position = UDim2.new(0.0920729373, 0, 0.0988000023, 0)
+    Background.Size = UDim2.new(0, 100, 0, 40)
+    Background.Draggable = true
+    Background.Active = true
+    Background.Selectable = true
+
+    Text.Name = "Text"
+    Text.Parent = Background
+    Text.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
+    Text.BackgroundTransparency = 0.500
+    Text.BorderSizePixel = 0
+    Text.Position = UDim2.new(0.400000006, 0, 0, 0)
+    Text.Size = UDim2.new(0, 60, 0, 40)
+    Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Text.TextSize = 15.000
+    Text.Text = "Mana"
+
+    UICorner.CornerRadius = UDim.new(0, 3)
+    UICorner.Parent = Text
+
+    Dragg.Name = "Dragg"
+    Dragg.Parent = Background
+    Dragg.BackgroundColor3 = Color3.fromRGB(141, 255, 121)
+    Dragg.BackgroundTransparency = 0.500
+    Dragg.BorderSizePixel = 0
+    Dragg.Position = UDim2.new(0.0599999987, 0, 0, 0)
+    Dragg.Size = UDim2.new(0, 35, 0, 40)
+    Dragg.Font = Enum.Font.SourceSans
+    Dragg.Text = ""
+    Dragg.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Dragg.TextSize = 14.000
+
+    Text.MouseButton1Click:Connect(function()
+    if game.CoreGui.ScreenGui.Enabled == false then
+    game.CoreGui.ScreenGui.Enabled = true
+    elseif game.CoreGui.ScreenGui.Enabled == true then
+    game.CoreGui.ScreenGui.Enabled = false
+    end
+    end)
+end
+
 --createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
 local function dragGUI(gui, dragpart)
     spawn(function()
