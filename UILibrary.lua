@@ -1,5 +1,41 @@
 repeat task.wait() until game:IsLoaded()
 
+-- Instances
+local Players = game.Players
+local LocalPlayer = Players.LocalPlayer
+local ms = game.Players.LocalPlayer:GetMouse()
+
+-- Services
+local UserInputService = game:GetService("UserInputService")
+local InputService = game:GetService("UserInputService")
+local input = game:GetService("UserInputService")
+local ts = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+
+-- I don't know what do i write here 
+local getasset = getsynasset or getcustomasset
+
+local tweens = {Notification = function(base)
+    ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
+end}
+
+local optionframe
+local TabsFrame
+
+-- Main ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game:WaitForChild("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Name = "ManaV2"
+
+-- Notifications ScreenGui
+local ScreenGuitwo = Instance.new("ScreenGui")
+ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
+ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGuitwo.Name = "ManaNotificationGui"
+
+local keybinds = {}
 local lib = {
     ["Rainbow"] = false,
     ["Notifications"] = false,
@@ -31,6 +67,7 @@ end
 
 local sliderapi = {}
 
+-- Config system
 local foldername = "Mana/Config"
 local conf = {
 	["file"]=foldername.."/"..game.PlaceId..".json",
@@ -70,19 +107,6 @@ spawn(function()
         task.wait(5)
     until (not configsaving)
 end)
-
-local keybinds = {}
-local ScreenGui = Instance.new("ScreenGui")
-local optionframe
-local TabsFrame
-ScreenGui.Parent = game:WaitForChild("CoreGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.Name = "ManaV2"
-local ScreenGuitwo = Instance.new("ScreenGui")
-ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
-ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGuitwo.Name = "ManaNotificationGui"
-local getasset = getsynasset or getcustomasset
 
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
     if tab.Method == "GET" then
@@ -164,76 +188,16 @@ local function getcustomassetfuncforsounds(path)
 end
 
 function lib:ToggleLib()
-    if not ScreenGui.Enabled and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
+    if not ScreenGui.Enabled and UserInputService:GetFocusedTextBox() == nil then
         ScreenGui.Enabled = true
     else
-        if game:GetService("UserInputService"):GetFocusedTextBox() == nil then
+        if UserInputService:GetFocusedTextBox() == nil then
             ScreenGui.Enabled = false
         end
     end
 end
-local uis = game:GetService("UserInputService")
-local input = game:GetService("UserInputService")
-local ms = game.Players.LocalPlayer:GetMouse()
-local ts = game:GetService("TweenService")
-local tweens = {Notification = function(base)
-    ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
-end}
-local Background
 
-local function createnotification(title, text, delay2, toggled)
-    spawn(function()
-        if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
-	        if lib["Notifications"] == true then
-		        local frame = Instance.new("Frame")
-		        frame.Size = UDim2.new(0, 100, 0, 115)
-		        frame.Position = UDim2.new(0.5, 0, 0, -115)
-		        frame.BorderSizePixel = 0
-		        frame.AnchorPoint = Vector2.new(0.5, 0)
-		        frame.BackgroundTransparency = 0.5
-		        frame.BackgroundColor3 = Color3.new(0, 0, 0)
-		        frame.Name = "Background"
-		        frame.Parent = ScreenGuitwo
-		        local frameborder = Instance.new("Frame")
-		        frameborder.Size = UDim2.new(1, 0, 0, 8)
-		        frameborder.BorderSizePixel = 0
-		        frameborder.BackgroundColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
-		        frameborder.Parent = frame
-		        local frametitle = Instance.new("TextLabel")
-		        frametitle.Font = Enum.Font.SourceSansLight
-		        frametitle.BackgroundTransparency = 1
-		        frametitle.Position = UDim2.new(0, 0, 0, 30)
-		        frametitle.TextColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
-		        frametitle.Size = UDim2.new(1, 0, 0, 28)
-		        frametitle.Text = "          "..title
-		        frametitle.TextSize = 24
-		        frametitle.TextXAlignment = Enum.TextXAlignment.Left
-		        frametitle.TextYAlignment = Enum.TextYAlignment.Top
-		        frametitle.Parent = frame
-		        local frametext = Instance.new("TextLabel")
-		        frametext.Font = Enum.Font.SourceSansLight
-		        frametext.BackgroundTransparency = 1
-		        frametext.Position = UDim2.new(0, 0, 0, 68)
-		        frametext.TextColor3 = Color3.new(1, 1, 1)
-		        frametext.Size = UDim2.new(1, 0, 0, 28)
-		        frametext.Text = "          "..text
-		        frametext.TextSize = 24
-		        frametext.TextXAlignment = Enum.TextXAlignment.Left
-		        frametext.TextYAlignment = Enum.TextYAlignment.Top
-		        frametext.Parent = frame
-		        local textsize = game:GetService("TextService"):GetTextSize(frametitle.Text, frametitle.TextSize, frametitle.Font, Vector2.new(100000, 100000))
-		        local textsize2 = game:GetService("TextService"):GetTextSize(frametext.Text, frametext.TextSize, frametext.Font, Vector2.new(100000, 100000))
-		        if textsize2.X > textsize.X then textsize = textsize2 end
-		        frame.Size = UDim2.new(0, textsize.X + 38, 0, 115)
-		        pcall(function()
-		            frame:TweenPosition(UDim2.new(0.5, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.15)
-		            game:GetService("Debris"):AddItem(frame, delay2 + 0.15)
-		        end)
-		end
-    end)
-end
-
-function lib:createnotification(title, text, delay2, toggled)
+function lib:CreateNotification(title, text, delay2, toggled)
     spawn(function()
         if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
 		if lib["Notifications"] == true then
@@ -284,6 +248,58 @@ function lib:createnotification(title, text, delay2, toggled)
 	end
     end)
 end
+
+function lib:CreateWarning(title, text, delay2, toggled)
+    spawn(function()
+        if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
+	        local frame = Instance.new("Frame")
+	        frame.Size = UDim2.new(0, 100, 0, 115)
+	        frame.Position = UDim2.new(0.5, 0, 0, -115)
+	        frame.BorderSizePixel = 0
+	        frame.AnchorPoint = Vector2.new(0.5, 0)
+	        frame.BackgroundTransparency = 0.5
+	        frame.BackgroundColor3 = Color3.new(0, 0, 0)
+	        frame.Name = "Background"
+	        frame.Parent = ScreenGuitwo
+	        local frameborder = Instance.new("Frame")
+	        frameborder.Size = UDim2.new(1, 0, 0, 8)
+	        frameborder.BorderSizePixel = 0
+	        frameborder.BackgroundColor3 = Color3.fromRGB(205, 64, 78)
+	        frameborder.Parent = frame
+	        local frametitle = Instance.new("TextLabel")
+	        frametitle.Font = Enum.Font.SourceSansLight
+	        frametitle.BackgroundTransparency = 1
+	        frametitle.Position = UDim2.new(0, 0, 0, 30)
+	        frametitle.TextColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
+	        frametitle.Size = UDim2.new(1, 0, 0, 28)
+	        frametitle.Text = "          "..title
+	        frametitle.TextSize = 24
+	        frametitle.TextXAlignment = Enum.TextXAlignment.Left
+	        frametitle.TextYAlignment = Enum.TextYAlignment.Top
+	        frametitle.Parent = frame
+	        local frametext = Instance.new("TextLabel")
+	        frametext.Font = Enum.Font.SourceSansLight
+	        frametext.BackgroundTransparency = 1
+	        frametext.Position = UDim2.new(0, 0, 0, 68)
+	        frametext.TextColor3 = Color3.new(1, 1, 1)
+	        frametext.Size = UDim2.new(1, 0, 0, 28)
+	        frametext.Text = "          "..text
+	        frametext.TextSize = 24
+	        frametext.TextXAlignment = Enum.TextXAlignment.Left
+	        frametext.TextYAlignment = Enum.TextYAlignment.Top
+	        frametext.Parent = frame
+	        local textsize = game:GetService("TextService"):GetTextSize(frametitle.Text, frametitle.TextSize, frametitle.Font, Vector2.new(100000, 100000))
+	        local textsize2 = game:GetService("TextService"):GetTextSize(frametext.Text, frametext.TextSize, frametext.Font, Vector2.new(100000, 100000))
+	        if textsize2.X > textsize.X then textsize = textsize2 end
+	        frame.Size = UDim2.new(0, textsize.X + 38, 0, 115)
+	        pcall(function()
+	            frame:TweenPosition(UDim2.new(0.5, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.15)
+	            game:GetService("Debris"):AddItem(frame, delay2 + 0.15)
+	        end)
+    end)
+end
+
+--lib:CreateNotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
 
 function lib:CreateUIToggleButton()
     screenien = Instance.new("ScreenGui", game:GetService("CoreGui"))
@@ -340,7 +356,6 @@ function lib:CreateUIToggleButton()
     end)
 end
 
---createnotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
 local function dragGUI(gui, dragpart)
     spawn(function()
         local dragging
@@ -373,7 +388,7 @@ local function dragGUI(gui, dragpart)
                 dragInput = input
             end
         end)
-        uis.InputChanged:Connect(function(input)
+        UserInputService.InputChanged:Connect(function(input)
             if input == dragInput and dragging then
                 update(input)
             end
@@ -394,8 +409,6 @@ local function playsound(id, volume)
 	    sound:Destroy()
       end
 end
-
-
 
 local tabs = {}
 function lib:CreateWindow()
@@ -573,7 +586,7 @@ function lib:CreateWindow()
                     isclicked = true
                     BindText.Text = "Bind: ..."
                     
-                    uis.InputBegan:Connect(function(input)
+                    UserInputService.InputBegan:Connect(function(input)
                         if input.KeyCode.Name ~= "Unknown" and input.KeyCode.Name ~= oldkey then
                             if isclicked  == false  then return end
                             if keybinds[input.KeyCode.Name] == true then
@@ -612,7 +625,7 @@ function lib:CreateWindow()
                         callback(false)
                     end)
                     spawn(function()
-                        createnotification(title, "Disabled "..title, 4, false)
+                        lib:CreateNotification(title, "Disabled "..title, 4, false)
                         configtable[title]["IsToggled"] = false
                     end)
                     toggle.BackgroundColor3 = Color3.fromRGB(14, 20, 14)
@@ -622,7 +635,7 @@ function lib:CreateWindow()
                         callback(true)
                     end)
                     spawn(function()
-                        createnotification(title, "Enabled "..title, 4, true)
+                        lib:CreateNotification(title, "Enabled "..title, 4, true)
                         configtable[title]["IsToggled"] = true
                     end)
                     toggle.BackgroundColor3 = tabname.TextColor3
@@ -666,14 +679,14 @@ function lib:CreateWindow()
             toggle.MouseButton1Click:Connect(function()
                 sussyamog:Toggle()
             end)
-            uis.InputBegan:Connect(function(input)
+            UserInputService.InputBegan:Connect(function(input)
                 if oldkey == nil then return end
                 if cooldown == true then
                     cooldown = false
                     return
                 end
                 if isclicked == true then return end
-                if input.KeyCode.Name == oldkey and game:GetService("UserInputService"):GetFocusedTextBox() == nil then
+                if input.KeyCode.Name == oldkey and UserInputService:GetFocusedTextBox() == nil then
                     sussyamog:Toggle()
                 end	
             end) 
@@ -747,7 +760,7 @@ function lib:CreateWindow()
                     end
                 end)
 
-                uis.InputChanged:Connect(function(input)
+                UserInputService.InputChanged:Connect(function(input)
                     if input.UserInputType == Enum.UserInputType.MouseMovement then
                         if sliding then
                             slide(input)
@@ -826,7 +839,7 @@ function lib:CreateWindow()
                         dropdownapi.Select(newindex)
                     else
                         warn("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!,")
-                        createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
+                        lib:CreateWarning("NewIndex in selector ("..argstable.Name..") in function `SelectNext` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
                     end
                 end
 
@@ -837,7 +850,7 @@ function lib:CreateWindow()
                         dropdownapi.Select(newindex)
                     else
                         warn("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!")
-                            createnotification("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
+                        lib:CreateWarning("NewIndex in selector ("..argstable.Name..") in function `SelectPrevious` was not found!", "If this keeps happening, go to you exploit's folder\nthen go to workspace/rektsky/config\nand delete everything inside of that folder", 10, false)
                     end
                 end
     			if configtable[ddname] and configtable[ddname]["Value"] then
@@ -931,7 +944,7 @@ function lib:CreateWindow()
     end
 end
 lib:ToggleLib()
-uis.InputBegan:Connect(function(input)
+UserInputService.InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.N then
         lib:ToggleLib()
     end
