@@ -3,13 +3,13 @@ repeat task.wait() until game:IsLoaded()
 -- Instances
 local Players = game.Players
 local LocalPlayer = Players.LocalPlayer
-local ms = game.Players.LocalPlayer:GetMouse()
+local Mouse = game.Players.LocalPlayer:GetMouse()
 
 -- Services
 local UserInputService = game:GetService("UserInputService")
 local InputService = game:GetService("UserInputService")
 local input = game:GetService("UserInputService")
-local ts = game:GetService("TweenService")
+local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
 
 
@@ -17,7 +17,7 @@ local CoreGui = game:GetService("CoreGui")
 local getasset = getsynasset or getcustomasset
 
 local tweens = {Notification = function(base)
-    ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
+    TweenService:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
 
 local optionframe
@@ -25,13 +25,13 @@ local TabsFrame
 
 -- Main ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game:WaitForChild("CoreGui")
+ScreenGui.Parent = CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Name = "ManaV2"
 
 -- Notifications ScreenGui
 local ScreenGuitwo = Instance.new("ScreenGui")
-ScreenGuitwo.Parent = game:WaitForChild("CoreGui")
+ScreenGuitwo.Parent = CoreGui
 ScreenGuitwo.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGuitwo.Name = "ManaNotificationGui"
 
@@ -40,7 +40,7 @@ local lib = {
     ["Rainbow"] = false,
     ["Notifications"] = false,
     ["Sounds"] = true,
-    ["GuiKeybind"] = "RightShift",
+    ["GuiKeybind"] = "N",
     ["IsDraggable"] = true,
     ["Objects"] = {}
 }
@@ -249,7 +249,7 @@ function lib:CreateNotification(title, text, delay2, toggled)
     end)
 end
 
-function lib:CreateWarning(title, text, delay2, toggled)
+function lib:CreateWarning(title, text, delay2)
     spawn(function()
         if ScreenGuitwo:FindFirstChild("Background") then ScreenGuitwo:FindFirstChild("Background"):Destroy() end
 	        local frame = Instance.new("Frame")
@@ -270,7 +270,7 @@ function lib:CreateWarning(title, text, delay2, toggled)
 	        frametitle.Font = Enum.Font.SourceSansLight
 	        frametitle.BackgroundTransparency = 1
 	        frametitle.Position = UDim2.new(0, 0, 0, 30)
-	        frametitle.TextColor3 = (toggled and Color3.fromRGB(102, 205, 67) or Color3.fromRGB(205, 64, 78))
+	        frametitle.TextColor3 = Color3.fromRGB(205, 64, 78)
 	        frametitle.Size = UDim2.new(1, 0, 0, 28)
 	        frametitle.Text = "          "..title
 	        frametitle.TextSize = 24
@@ -299,7 +299,8 @@ function lib:CreateWarning(title, text, delay2, toggled)
     end)
 end
 
---lib:CreateNotification("Loaded", "Press Right-Shift to toggle GUI", 3, true)
+--lib:CreateNotification("Loaded", "Press N to toggle GUI", 3, true)
+--lib:CreateWarning("Loaded", "Press N to toggle GUI", 3)
 
 function lib:CreateUIToggleButton()
     screenien = Instance.new("ScreenGui", game:GetService("CoreGui"))
