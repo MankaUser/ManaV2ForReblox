@@ -2221,7 +2221,7 @@ do
                                 game.Players:ReportAbuse(v, reportfound, 'He said "' .. msg .. '", was very offensive to me')
                                 if notificationsenabled["Value"] then
                                     print("Reported" .. v.Name, "for saying " .. msg)
-                                    createnotification("Reported" .. v.Name, "for saying " .. msg, 5, true)
+                                    lib:CreateNotification("Reported" .. v.Name, "for saying " .. msg, 5, true)
                                 end
                             end
                         end)
@@ -2243,6 +2243,6 @@ do
     })
 end
 
-lib:createnotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
+lib:CreateNotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
 
 lib:CreateUIToggleButton()
