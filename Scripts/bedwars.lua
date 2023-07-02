@@ -925,22 +925,7 @@ local fly = Tabs["Blatant"]:CreateToggle({
                         task.wait()
                         if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
                         if clone then
-                            
-                            task.wait()
-                            workspace.Gravity = flygravityb["Value"]
-                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
-                            local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
-                            local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
-                            if SpaceHeld then
-                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, FlyStudTP["Value"], 0)
-                                task.wait()
-                            end
-                            if ShiftHeld then
-                                clone.HumanoidRootPart.CFrame = clone.HumanoidRootPart.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
-                                task.wait()
-                            end
-                            
-                            createnotification("Fly", "Disable CloneGodmodeFullDisabler to fly", 5, true)
+                            lib:CreateNotification("Fly", "Disable CloneGodmodeFullDisabler to fly", 5, true)
                         else
                           
                             task.wait()
@@ -967,7 +952,7 @@ local fly = Tabs["Blatant"]:CreateToggle({
                 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
                 workspace.Gravity = 196
                 --print(connectthingylol)
-                --conectthingylol:Destroy()
+                --conectthingylol:DIsconnect()
             end
         end
         end
@@ -1016,15 +1001,14 @@ local flyght = Tabs["Blatant"]:CreateToggle({
         ["Name"] = "Flight",
         ["Keybind"] = nil,
         ["Callback"] = function(v)
-            flightenabled = v
-            if flightenabled == true then
+            if v then
                 spawn(function()
                     repeat
                         task.wait()
                         workspace.Gravity = 0
                     until (not flyenabled == true)
                 end)
-            elseif flightenabled == false then
+            else then
                 workspace.Gravity = 196
             end
         end
@@ -1137,21 +1121,15 @@ Tabs["Misc"]:CreateToggle({
         local keystrokesval = v
         if keystrokesval then
 		guiScreen = Instance.new("ScreenGui")
-		guiScreen.Parent = game.Players.LocalPlayer.PlayerGui
+		local TextLabel = Instance.new("TextLabel")
+		local UICorner = Instance.new("UICorner")
 		keystrokesframe = Instance.new("Frame")
+		guiScreen.Parent = game.Players.LocalPlayer.PlayerGui
 		keystrokesframe.Size = UDim2.new(0, 110,0, 106)
 		keystrokesframe.BackgroundTransparency = 1
 		keystrokesframe.Parent = guiScreen
 		keystrokesframe.Active = true
-		keystrokesframe.Draggable = true
-		local TextLabel = Instance.new("TextLabel")
-		local UICorner = Instance.new("UICorner")
-		createKeystroke(Enum.KeyCode.W, UDim2.new(0, 38, 0, 0), UDim2.new(0, 6, 0, 5))
-		createKeystroke(Enum.KeyCode.S, UDim2.new(0, 38, 0, 42), UDim2.new(0, 8, 0, 5))
-		createKeystroke(Enum.KeyCode.A, UDim2.new(0, 0, 0, 42), UDim2.new(0, 7, 0, 5))
-		createKeystroke(Enum.KeyCode.D, UDim2.new(0, 76, 0, 42), UDim2.new(0, 8, 0, 5))
-		createKeystroke(Enum.KeyCode.Space, UDim2.new(0, 0, 0, 83), UDim2.new(0, 25, 0, -10))
-		
+		keystrokesframe.Draggable = true	
 		TextLabel.Parent = keystrokesframe
 		TextLabel.BackgroundColor3 = Color3.fromRGB(90, 255, 109)
 		TextLabel.BackgroundTransparency = 0.500
@@ -1160,12 +1138,18 @@ Tabs["Misc"]:CreateToggle({
 		TextLabel.Text = ""
 		TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 		TextLabel.TextSize = 14.000
-		
 		UICorner.CornerRadius = UDim.new(0, 4)
 		UICorner.Parent = TextLabel
+				
+		createKeystroke(Enum.KeyCode.W, UDim2.new(0, 38, 0, 0), UDim2.new(0, 6, 0, 5))
+		createKeystroke(Enum.KeyCode.S, UDim2.new(0, 38, 0, 42), UDim2.new(0, 8, 0, 5))
+		createKeystroke(Enum.KeyCode.A, UDim2.new(0, 0, 0, 42), UDim2.new(0, 7, 0, 5))
+		createKeystroke(Enum.KeyCode.D, UDim2.new(0, 76, 0, 42), UDim2.new(0, 8, 0, 5))
+		createKeystroke(Enum.KeyCode.Space, UDim2.new(0, 0, 0, 83), UDim2.new(0, 25, 0, -10))
+
 
         else
-            guiScreen:Destroy()
+            guiScreen.Enabled = false
         end
     end
 })
@@ -2097,8 +2081,8 @@ uninject = Tabs["Misc"]:CreateToggle({
     ["Keybind"] = nil,
     ["Callback"] = function(v)
         if v then
-	        a = game:GetService("CoreGui").ManaV2
-            b = game:GetService("CoreGui").ManaNotificationGui
+	    a = game:GetService("CoreGui"):FindFirstChild("ManaV2")
+            b = game:GetService("CoreGui"):FindFirstChild("ManaNotificationGui")
             c = game:GetService("CoreGui")["54687"] 
             e = game:GetService("CoreGui"):FindFirstChild("54674679857")
             if a then a:Destroy() end
