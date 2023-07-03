@@ -1008,7 +1008,7 @@ local flyght = Tabs["Blatant"]:CreateToggle({
                         workspace.Gravity = 0
                     until (not flyenabled == true)
                 end)
-            else then
+            else
                 workspace.Gravity = 196
             end
         end
