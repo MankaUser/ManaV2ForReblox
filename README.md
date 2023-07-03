@@ -3,5 +3,8 @@ Using UI Library from rektsky4roblox, because i'm lazy to create another library
 <br> Trying to make this script better than rektsky4roblox and engoware.
 <br>
 <br>
-# Current best features in ManaV2
-Nothing
+# Supports Games
+```
+BEDWARS
+Any Game ( soon )
+```
