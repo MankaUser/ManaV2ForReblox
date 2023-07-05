@@ -39,6 +39,7 @@ local keybinds = {}
 local lib = {
     ["Rainbow"] = false,
     ["Notifications"] = false,
+    ["Developer"] = false,
     ["Sounds"] = true,
     ["GuiKeybind"] = "N",
     ["IsDraggable"] = true,
