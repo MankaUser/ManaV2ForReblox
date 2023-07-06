@@ -1,18 +1,35 @@
 repeat task.wait() until game:IsLoaded()
 
-local uis = game:GetService("UserInputService")
-local input = game:GetService("UserInputService")
-local ms = game.Players.LocalPlayer:GetMouse()
-local ts = game:GetService("TweenService")
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/UILibrary.lua"))()
 
 local entity = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua", true))()
 
+--whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+
 
 --local whiteliststhing = {}
 
---whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/MankaUser/ManaV2ForReblox/main/whitelist.lua"))()
+--Services
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local input = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+
+--Instances
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local HumanoidRootPart = Character.HumanoidRootPart
+local Humanoid = Character.Humanoid
+local Camera = workspace.CurrentCamera
+local RealCamera = workspace.Camera
+local ScreenGuitwo = CoreGui.ManaNotificationGui
+local Mouse = LocalPlayer:GetMouse()
+
+--What do i write here
+local getasset = getsynasset or getcustomasset
 
 do
     local oldcharacteradded = entity.characterAdded
@@ -26,12 +43,8 @@ local spawn = function(func)
     return coroutine.wrap(func)()
 end
 
-local getasset = getsynasset or getcustomasset
-
-local ScreenGuitwo = game.CoreGui.ManaNotificationGui
-
 local tweens = {Notification = function(base)
-    ts:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
+    TweenService:Create(base, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Position = UDim2.new(0.438, 0,0.053, 0)}):Play()
 end}
 
 local Keystrokes = {}
@@ -91,12 +104,6 @@ end)
 
 repeat task.wait() until (entity.isAlive)
 
-local lplr = game:GetService("Players").LocalPlayer
-local char = lplr.Character
-local hrp = char.HumanoidRootPart
-local hmd = char.Humanoid
-local cam = workspace.CurrentCamera
-local RunService = game:GetService("RunService")
 local Client = require(game:GetService("ReplicatedStorage").TS.remotes).default.Client
 local RemoteFolder = game.ReplicatedStorage:WaitForChild("rbxts_include")["node_modules"]["@rbxts"]["net"]["out"]["_NetManaged"]
 
@@ -109,23 +116,23 @@ local ClientHandler = Client
 local itemtable = debug.getupvalue(itemtablefunc, 1)
 local matchend = require(game:GetService("Players").LocalPlayer.PlayerScripts.TS.controllers.game.match["match-end-controller"]).MatchEndController
 local matchstate = require(game:GetService("ReplicatedStorage").TS.match["match-state"]).MatchState
-local KnitClient = debug.getupvalue(require(lplr.PlayerScripts.TS.knit).setup, 6)
+local KnitClient = debug.getupvalue(require(LocalPlayer.PlayerScripts.TS.knit).setup, 6)
 local ballooncontroller = KnitClient.Controllers.BalloonController
 local queuemeta = require(game:GetService("ReplicatedStorage").TS.game["queue-meta"]).QueueMeta
 local clntstorehandlr = require(game.Players.LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
 local matchState = clntstorehandlr:getState().Game.matchState
 local itemmeta = require(game:GetService("ReplicatedStorage").TS.item["item-meta"])
 local itemstuff = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
-local uis = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
 
 local realchar
 local clone
 local function clonemake()
-    realchar = lplr.Character
+    realchar = LocalPlayer.Character
     realchar.Archivable = true
     clone = realchar:Clone()
     clone.Parent = workspace
-    lplr.Character = clone
+    LocalPlayer.Character = clone
 end
 
 local clonetwo
@@ -158,7 +165,7 @@ end
 local attackentitycont = Client:Get(getremote(debug.getconstants(getmetatable(KnitClient.Controllers.SwordController)["attackEntity"])))  
 
 function getinv(plr)
-    local plr = plr or lplr
+    local plr = plr or LocalPlayer
     local thingy, thingytwo = pcall(function() return InventoryUtil.getInventory(plr) end)
     return (thingy and thingytwo or {
         items = {},
@@ -210,14 +217,14 @@ local function isAlive(plr)
 	if plr then
 		return plr and plr.Character and plr.Character.Parent ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChild("Head") and plr.Character:FindFirstChild("Humanoid")
 	end
-	return lplr and lplr.Character and lplr.Character.Parent ~= nil and lplr.Character:FindFirstChild("HumanoidRootPart") and lplr.Character:FindFirstChild("Head") and lplr.Character:FindFirstChild("Humanoid")
+	return LocalPlayer and LocalPlayer.Character and LocalPlayer.Character.Parent ~= nil and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character:FindFirstChild("Head") and LocalPlayer.Character:FindFirstChild("Humanoid")
 end
 
 local function playanimation(id) 
     if isAlive() then 
         local animation = Instance.new("Animation")
         animation.AnimationId = id
-        local animatior = lplr.Character.Humanoid.Animator
+        local animatior = LocalPlayer.Character.Humanoid.Animator
         animatior:LoadAnimation(animation):Play()
     end
 end
@@ -252,7 +259,7 @@ local function targetCheck(plr, check)
 end
 
 local function isPlayerTargetable(plr, target)
-    return plr ~= lplr and plr and isAlive(plr) and targetCheck(plr, target)
+    return plr ~= LocalPlayer and plr and isAlive(plr) and targetCheck(plr, target)
 end
 
 local function GetAllNearestHumanoidToPosition(distance, amount)
@@ -261,7 +268,7 @@ local function GetAllNearestHumanoidToPosition(distance, amount)
     if entity.isAlive then -- alive check
         for i, v in pairs(game.Players:GetChildren()) do -- loop through players
             if isPlayerTargetable((v), true, true, v.Character ~= nil) and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Head") and currentamount < amount then -- checks
-                local mag = (lplr.Character.HumanoidRootPart.Position - v.Character:FindFirstChild("HumanoidRootPart").Position).magnitude
+                local mag = (LocalPlayer.Character.HumanoidRootPart.Position - v.Character:FindFirstChild("HumanoidRootPart").Position).magnitude
                 if mag <= distance then -- mag check
                     table.insert(returnedplayer, v)
                     currentamount = currentamount + 1
@@ -270,7 +277,7 @@ local function GetAllNearestHumanoidToPosition(distance, amount)
         end
         for i2,v2 in pairs(game:GetService("CollectionService"):GetTagged("Monster")) do -- monsters
             if v2:FindFirstChild("HumanoidRootPart") and currentamount < amount and v2.Name ~= "Duck" then -- no duck
-                local mag = (lplr.Character.HumanoidRootPart.Position - v2.HumanoidRootPart.Position).magnitude
+                local mag = (LocalPlayer.Character.HumanoidRootPart.Position - v2.HumanoidRootPart.Position).magnitude
                 if mag <= distance then -- magcheck
                     table.insert(returnedplayer, {Name = (v2 and v2.Name or "Monster"), UserId = 1443379645, Character = v2}) -- monsters are npcs so I have to create a fake player for target info
                     currentamount = currentamount + 1
@@ -289,7 +296,7 @@ end
 local isclone = false
 
 local function getItem(itemName)
-	for i5, v5 in pairs(getinv(lplr)["items"]) do
+	for i5, v5 in pairs(getinv(LocalPlayer)["items"]) do
 		if v5["itemType"] == itemName then
 			return v5, i5
 		end
@@ -298,7 +305,7 @@ local function getItem(itemName)
 end
 
 local function getwool()
-	for i5, v5 in pairs(getinv(lplr)["items"]) do
+	for i5, v5 in pairs(getinv(LocalPlayer)["items"]) do
 		if v5["itemType"]:match("wool") or v5["itemType"]:match("grass") then
 			return v5["itemType"], v5["amount"]
 		end
@@ -311,12 +318,12 @@ repeat task.wait() until (Flamework.isInitialized)
 
 local BlockController2 = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["block-engine"].out.client.placement["block-placer"]).BlockPlacer
 local blockcontroller = require(game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"]["@easy-games"]["block-engine"].out).BlockEngine
-local BlockEngine = require(lplr.PlayerScripts.TS.lib["block-engine"]["client-block-engine"]).ClientBlockEngine
+local BlockEngine = require(LocalPlayer.PlayerScripts.TS.lib["block-engine"]["client-block-engine"]).ClientBlockEngine
 local blocktable = BlockController2.new(BlockEngine, getwool())
 function placeblockthing(newpos, customblock)
     local placeblocktype = (customblock or getwool())
     blocktable.blockType = placeblocktype
-    if blockcontroller:isAllowedPlacement(lplr, placeblocktype, Vector3.new(newpos.X / 3, newpos.Y / 3, newpos.Z / 3)) and getItem(placeblocktype) then
+    if blockcontroller:isAllowedPlacement(LocalPlayer, placeblocktype, Vector3.new(newpos.X / 3, newpos.Y / 3, newpos.Z / 3)) and getItem(placeblocktype) then
         return blocktable:placeBlock(Vector3.new(newpos.X / 3, newpos.Y / 3, newpos.Z / 3))
     end
 end
@@ -340,7 +347,7 @@ local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["c
 
 local function getEquipped()
     local typetext = ""
-    local obj = (entity.isAlive and lplr.Character:FindFirstChild("HandInvItem") and lplr.Character.HandInvItem.Value or nil)
+    local obj = (entity.isAlive and LocalPlayer.Character:FindFirstChild("HandInvItem") and LocalPlayer.Character.HandInvItem.Value or nil)
     if obj then
         if obj.Name:find("sword") or obj.Name:find("blade") or obj.Name:find("baguette") or obj.Name:find("scythe") or obj.Name:find("dao") then
             typetext = "sword"
@@ -355,24 +362,35 @@ local function getEquipped()
     return {["Object"] = obj, ["Type"] = typetext}
 end
 
-local itemtab = debug.getupvalue(require(game:GetService("ReplicatedStorage").TS.item["item-meta"]).getItemMeta, 1)
-local CombatConstant = require(game:GetService("ReplicatedStorage").TS.combat["combat-constant"]).CombatConstant
+function SwitchTool(tool)
+  game:GetService("ReplicatedStorage").rbxts_include.node_modules["@rbxts"].net.out._NetManaged.SetInvItem:InvokeServer({
+    ["hand"] = tool,
+  })
+  repeat task.wait() until Character.HandInvItem == tool
+end
 
-local function getEquipped()
-    local typetext = ""
-    local obj = (entity.isAlive and lplr.Character:FindFirstChild("HandInvItem") and lplr.Character.HandInvItem.Value or nil)
-    if obj then
-        if obj.Name:find("sword") or obj.Name:find("blade") or obj.Name:find("baguette") or obj.Name:find("scythe") or obj.Name:find("dao") or obj.Name:find("_stick") then
-            typetext = "sword"
-        end
-        if obj.Name:find("wool") or itemtab[obj.Name]["block"] then
-            typetext = "block"
-        end
-        if obj.Name:find("bow") then
-            typetext = "bow"
-        end
+local function attackEntity(plr)
+    local root = HumanoidRootPart
+    if not root then
+        return nil
     end
-    return {["Object"] = obj, ["Type"] = typetext}
+    local selfrootpos = HumanoidRootPart.Position
+    local selfpos = selfrootpos + (killaurarange.Value > 14 and (selfrootpos - root.Position).magnitude > 14 and (CFrame.lookAt(selfrootpos, root.Position).lookVector * 4) or Vector3.zero)
+    local sword = gegetEquipped()
+    killauraremote:SendToServer({
+        ["weapon"] = sword ~= nil and sword.tool,
+        ["entityInstance"] = plr.Character,
+        ["validate"] = {
+            ["raycast"] = {
+                ["cameraPosition"] = hashvec(cam.CFrame.Position),
+                ["cursorDirection"] = hashvec(Ray.new(cam.CFrame.Position, root.CFrame.Position).Unit.Direction)
+            },
+            ["targetPosition"] = hashvec(root.CFrame.Position),
+            ["selfPosition"] = hashvec(selfpos)
+        },
+        ["chargedAttack"] = {
+            ["chargeRatio"] = 0}
+    })
 end
 
 
@@ -425,21 +443,21 @@ do
                     if plrthinglopl then
                         for i,v in pairs(plrthinglopl) do
                             if v.Character and v.Name ~= game.Players.LocalPlayer.Name and v.Character:FindFirstChild("HumanoidRootPart") then
-                                if v.Team ~= tostring(lplr.Team) then
+                                if v.Team ~= tostring(LocalPlayer.Team) then
                                     if killaurafirstpersonanim["Value"] then
                                         pcall(function()
                                             if killauraanimval["Value"] == "Cool" then
-                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
+                                                if entity.isAlive and Camera.Viewmodel.RightHand.RightWrist and origC0 then
                                                     for i, v in pairs(autoblockanim) do
-                                                        coolanimlol = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
+                                                        coolanimlol = game:GetService("TweenService"):Create(Camera.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
                                                         coolanimlol:Play()
                                                         task.wait(v.Time - 0.01)
                                                     end
                                                 end
                                             elseif killauraanimval["Value"] == "KillMyself" then
-                                                if entity.isAlive and cam.Viewmodel.RightHand.RightWrist and origC0 then
+                                                if entity.isAlive and Camera.Viewmodel.RightHand.RightWrist and origC0 then
                                                     for i, v in pairs(kmsanim) do
-                                                        killauracurrentanim = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
+                                                        killauracurrentanim = game:GetService("TweenService"):Create(Camera.Viewmodel.RightHand.RightWrist, TweenInfo.new(v.Time), {C0 = origC0 * v.CFrame})
                                                         killauracurrentanim:Play()
                                                         task.wait(v.Time - 0.01)
                                                     end
@@ -452,13 +470,13 @@ do
                         end
                         if killauraanimval["Value"] == "Cool" then
                             if (not rgfejd) then
-                                newthingy = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
+                                newthingy = game:GetService("TweenService"):Create(Camera.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
                                 newthingy:Play()
                             end
                         end
                         if killauraanimval["Value"] == "KillMyself" then
                             if (not rgfejd) then
-                                sdfsdf = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
+                                sdfsdf = game:GetService("TweenService"):Create(Camera.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
                                 sdfsdf:Play()
                             end
                         end
@@ -489,10 +507,10 @@ do
         ["Name"] = "Anim",
         ["Function"] = function(val)
             if val == "KillMyself" then
-                sdfsdf = game:GetService("TweenService"):Create(cam:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
+                sdfsdf = game:GetService("TweenService"):Create(Camera:WaitForChild("Viewmodel").RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0 * CFrame.new(-2.5, -4.5, -0.02) * CFrame.Angles(math.rad(90), math.rad(0), math.rad(-0))})
                 sdfsdf:Play()
             elseif val == "Cool" then
-                 newewe = game:GetService("TweenService"):Create(cam.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
+                 newewe = game:GetService("TweenService"):Create(Camera.Viewmodel.RightHand.RightWrist, TweenInfo.new(0.1), {C0 = origC0})
                  newewe:Play()
             end
         end,
@@ -511,6 +529,37 @@ end
 
 
 do
+	local KillAuraV2Range = {["Value"] = 23}
+	local Killaura = {Enabled = false}
+	local killauraremote = KnitClient.Controllers.SwordController.sendServerRequest
+	KillauraV2 = Tabs["Blatant"]:CreateToggle({
+		["Name"] = "KillAuraV2",
+        ["Keybind"] = nil,
+        ["Callback"] = function(v)
+			if v then
+
+					local plrs = GetAllNearestHumanoidToPosition(KillAuraV2Range["Value"] - 0.0001, 1)
+					SwitchTool(getEquipped()["Type"])
+					for i,plr in pairs(plrs) do
+						attackEntity(plr)
+					end
+			else
+
+			end
+			end
+	})
+
+    KillAuraV2Range = KillauraV2:CreateSlider({
+        ["Name"] = "AttackRange",
+        ["Function"] = function() end,
+        ["Min"] = 1,
+        ["Max"] = 23,
+        ["Default"] = 23,
+        ["Round"] = 0
+    })
+end
+
+do
     local velohorizontal = {["Value"] = 0}
     local velovertical = {["Value"] = 0}
     local velocitytog = Tabs["Combat"]:CreateToggle({
@@ -520,8 +569,8 @@ do
             getgenv().veloval = v
             spawn(function()
                 if getgenv().veloval then
-                    if not hmd then return end
-                    if hmd then
+                    if not Humanoid then return end
+                    if Humanoid then
                         kbtable["kbDirectionStrength"] = 0
                         kbtable["kbUpwardStrength"] = 0
                     end
@@ -536,7 +585,7 @@ do
     velohorizontal = velocitytog:CreateSlider({
         ["Name"] = "Horizontal",
         ["Function"] = function() 
-            if hmd then
+            if Humanoid then
                 kbtable["kbDirectionStrength"] = velohorizontal["Value"]
             end
         end,
@@ -548,7 +597,7 @@ do
     velovertical = velocitytog:CreateSlider({
         ["Name"] = "Vertical",
         ["Function"] = function() 
-            if hmd then
+            if Humanoid then
                 kbtable["kbUpwardStrength"] = velovertical["Value"]
             end
         end,
@@ -569,12 +618,12 @@ do
         ["Callback"] = function(v)
             if v then
                 local holding = false
-                ACC1 = uis.InputBegan:connect(function(input, gameProcessed)
+                ACC1 = UserInputService.InputBegan:connect(function(input, gameProcessed)
                     if gameProcessed and input.UserInputType == Enum.UserInputType.MouseButton1 then
                         holding = true
                     end
                 end)
-                ACC2 = uis.InputEnded:connect(function(input)
+                ACC2 = UserInputService.InputEnded:connect(function(input)
                     if input.UserInputType == Enum.UserInputType.MouseButton1 then
                         holding = false
                     end
@@ -696,22 +745,22 @@ do
         ["Callback"] = function(v)
             local highjumpval = v
             if highjumpval then
-                lplr.Character.Humanoid:ChangeState("Jumping")
+                LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                 task.wait()
                 workspace.Gravity = 5
                 spawn(function()
                     for i = 1, highjumpforce["Value"] do
                         wait()
                         if (not highjumpval) then return end
-                        lplr.Character.Humanoid:ChangeState("Jumping")
+                        LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                     end
                 end)
                 spawn(function()
                     for i = 1, highjumpforce["Value"] / 28 do
                         task.wait(0.1)
-                        lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
                         task.wait(0.1)
-                        lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
                     end
                 end)
                 highjump:silentToggle()
@@ -749,14 +798,14 @@ do
                 workspace.Gravity = gravityval["Value"]
                 repeat
                     if (not longjumpval) then break end
-                    Speedeb["Value"] = LJSpeed["Value"]
+                    --Speedeb["Value"] = LJSpeed["Value"]
                     task.wait(longjumpdelay["Value"])
-                    Speedeb["Value"] = oldthing
+                   -- Speedeb["Value"] = oldthing
                     task.wait(0.12)
                 until (not longjumpval)
             else
                 workspace.Gravity = 196.19999694824
-                speedvalue["Value"] = oldthing
+                --speedvalue["Value"] = oldthing
                 return
             end
         end
@@ -800,15 +849,15 @@ local LongJumpV2 = Tabs["Blatant"]:CreateToggle({
                     repeat
                         if (not customlongjumpval) then return end
                         task.wait()
-                        if lplr.Character.Humanoid.Jump == true then
+                        if LocalPlayer.Character.Humanoid.Jump == true then
                             if (not customlongjumpval) then return end
-                            lplr.Character.Humanoid.WalkSpeed = 15
+                            LocalPlayer.Character.Humanoid.WalkSpeed = 15
                             Workspace.Gravity = 23
-                            lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.new(0,-0.2,-2.1) 
+                            LocalPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-0.2,-2.1) 
                             wait(0.1)
-                            lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.new(0,-0.5,-2.1) 
+                            LocalPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-0.5,-2.1) 
                             wait(0.1)
-                            lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0.2 ,0) 
+                            LocalPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0.2 ,0) 
                             wait(0.1)
                         end
                     until (not customlongjumpval)                
@@ -816,11 +865,11 @@ local LongJumpV2 = Tabs["Blatant"]:CreateToggle({
                 spawn(function()
                     repeat
                         if (not customlongjumpval) then return end
-                        lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
                         wait()
-                        lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Running)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Running)
                         wait()
-                        lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Landed)
+                        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Landed)
                         wait()
                     until (not customlongjumpval)
                 end)
@@ -856,14 +905,14 @@ end
                     speedd = 200
                     connectionnnn = game:GetService("RunService").Heartbeat:connect(function()
                         local velo = clone.Humanoid.MoveDirection * speedd
-                        clone.HumanoidRootPart.Velocity = Vector3.new(velo.x, lplr.Character.HumanoidRootPart.Velocity.y, velo.z)
+                        clone.HumanoidRootPart.Velocity = Vector3.new(velo.x, LocalPlayer.Character.HumanoidRootPart.Velocity.y, velo.z)
                     end)
                 end)
                 repeat task.wait() until (matchState == 2)
                 funiclonegodmodedisab:Toggle()
             else
                 clone:remove()
-                lplr.Character = realchar
+                LocalPlayer.Character = realchar
                 realchar.Humanoid:ChangeState("Dead")
                 isclone = false
                 connectionnnn:Disconnect()
@@ -871,14 +920,14 @@ end
             end
         end
     })
-local jumpbeb = {["Value"] = 23}
+--local jumpbeb = {["Value"] = 23}
 SpeedobBeb = Tabs["Blatant"]:CreateToggle({
     ["Name"] = "Speed",
     ["Keybind"] = nil,
     ["Callback"] = function(v)
         if v == true then
              game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
-             game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpbeb["Value"]
+             --game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpbeb["Value"]
         else
              game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
              game.Players.LocalPlayer.Character.Humanoid.JumpPower = 23
@@ -896,7 +945,8 @@ Speedeb = SpeedobBeb:CreateSlider({
         ["Default"] = 23,
         ["Round"] = 0
     })
-    
+   
+--[[
 jumpbeb = SpeedobBeb:CreateSlider({
         ["Name"] = "JumpPower",
         ["Function"] = function()
@@ -908,92 +958,110 @@ jumpbeb = SpeedobBeb:CreateSlider({
         ["Round"] = 0
     })
     
---[[
-local flygravityb = {["Value"] = 0}
-local flyspeedb = {["Value"] = 23}
-local FlyStudTP = {["Value"] = 5}
-local flyenabled
+  ]]
+
+
+local flygravityb = {Value = 0}
+local flyspeedb = {Value = 23}
+local FlyStudTP = {Value = 5}
+local flyenabled = false
+
+local function flyLogic()
+    if not flyenabled then
+        return
+    end
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if not character or not character:IsDescendantOf(workspace) then
+        return
+    end
+    
+    local humanoid = character:FindFirstChild("Humanoid")
+    if not humanoid or humanoid.Health == 0 then
+        return
+    end
+    
+    local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        return
+    end
+    
+    workspace.Gravity = flygravityb.Value
+    humanoid.WalkSpeed = flyspeedb.Value
+    
+    local UserInputService = game:GetService("UserInputService")
+    local SpaceHeld = UserInputService:IsKeyDown(Enum.KeyCode.Space)
+    local ShiftHeld = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift)
+    
+    if SpaceHeld then
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, FlyStudTP.Value, 0)
+    end
+    
+    if ShiftHeld then
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame * CFrame.new(0, -FlyStudTP.Value, 0)
+    end
+end
+
 local fly = Tabs["Blatant"]:CreateToggle({
-        ["Name"] = "Fly",
-        ["Keybind"] = nil,
-        ["Callback"] = function(v)
-            flyenabled = v
-            if flyenabled then
-            if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
-                spawn(function()
-                    repeat
-                        task.wait()
-                        if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
-                        if clone then
-                            lib:CreateNotification("Fly", "Disable CloneGodmodeFullDisabler to fly", 5, true)
-                        else
-                          
-                            task.wait()
-                            workspace.Gravity = flygravityb["Value"]
-                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = flyspeedb["Value"]
-                            local SpaceHeld = uis:IsKeyDown(Enum.KeyCode.Space)
-                            local ShiftHeld = uis:IsKeyDown(Enum.KeyCode.LeftShift)
-                            if game.Players.LocalPlayer.character.Humanoid.Health ~= 0 then
-                            if SpaceHeld then
-                                hrp.CFrame = hrp.CFrame * CFrame.new(0, FlyStudTP["Value"], 0)
-                                task.wait()
-                            end
-                            if ShiftHeld then
-                                hrp.CFrame = hrp.CFrame * CFrame.new(0, -FlyStudTP["Value"], 0)
-                                task.wait()
-                            end
-                            end
-                        end
-                        end
-                        end
-                    until (not flyenabled)
-                end)
-            else
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedeb["Value"]
-                workspace.Gravity = 196
-                --print(connectthingylol)
-                --conectthingylol:DIsconnect()
+    Name = "Fly",
+    Keybind = nil,
+    Callback = function(v)
+        flyenabled = v
+        
+        if flyenabled then
+            spawn(function()
+                while flyenabled do
+                    flyLogic()
+                    wait()
+                end
+            end)
+        else
+            local player = game.Players.LocalPlayer
+            if player.Character then
+                player.Character.Humanoid.WalkSpeed = flyspeedb.Value
             end
+            workspace.Gravity = 196
         end
-        end
-    })
+    end
+})
 
 flyspeedb = fly:CreateSlider({
-        ["Name"] = "FlyWalkSpeed",
-        ["Function"] = function(v)
+    Name = "FlyWalkSpeed",
+    Function = function(v)
         if flyenabled then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
         end
-        end,
-        ["Min"] = 0,
-        ["Max"] = 23,
-        ["Default"] = 23,
-        ["Round"] = 0
-    })
-    
+    end,
+    Min = 0,
+    Max = 23,
+    Default = 23,
+    Round = 0
+})
+
 flygravityb = fly:CreateSlider({
-        ["Name"] = "FlyGravity",
-        ["Function"] = function(v)
+    Name = "FlyGravity",
+    Function = function(v)
         if flyenabled then
-        game.workspace.Gravity = v
+            workspace.Gravity = v
         end
-        end,
-        ["Min"] = 0,
-        ["Max"] = 196,
-        ["Default"] = 0,
-        ["Round"] = 0
-    })
-    
+    end,
+    Min = 0,
+    Max = 196,
+    Default = 0,
+    Round = 0
+})
+
 FlyStudTP = fly:CreateSlider({
-        ["Name"] = "StudTP",
-        ["Function"] = function()
-        end,
-        ["Min"] = 0,
-        ["Max"] = 15,
-        ["Default"] = 5,
-        ["Round"] = 0
-    })
-]]
+    Name = "StudTP",
+    Function = function(v)
+    end,
+    Min = 0,
+    Max = 15,
+    Default = 5,
+    Round = 0
+})
+
 
 
 local flightenabled
@@ -1085,11 +1153,11 @@ Tabs["Render"]:CreateToggle({
                             thing.Size = UDim2.new(0, 256, 0, 256)
                         end
                         
-                        if isAlive(plr) and plr ~= lplr and plr.Team ~= tostring(lplr.Team) then
-                            local rootPos, rootVis = cam:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position)
-                            local rootSize = (plr.Character.HumanoidRootPart.Size.X * 1200) * (cam.ViewportSize.X / 1920)
-                            local headPos, headVis = cam:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position + Vector3.new(0, 1 + (plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 and 2 or plr.Character.Humanoid.HipHeight), 0))
-                            local legPos, legVis = cam:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position - Vector3.new(0, 1 + (plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 and 2 or plr.Character.Humanoid.HipHeight), 0))
+                        if isAlive(plr) and plr ~= LocalPlayer and plr.Team ~= tostring(LocalPlayer.Team) then
+                            local rootPos, rootVis = Camera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position)
+                            local rootSize = (plr.Character.HumanoidRootPart.Size.X * 1200) * (Camera.ViewportSize.X / 1920)
+                            local headPos, headVis = Camera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position + Vector3.new(0, 1 + (plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 and 2 or plr.Character.Humanoid.HipHeight), 0))
+                            local legPos, legVis = Camera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position - Vector3.new(0, 1 + (plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 and 2 or plr.Character.Humanoid.HipHeight), 0))
                             rootPos = rootPos
                             if rootVis then
                                 thing.Visible = rootVis
@@ -1112,7 +1180,7 @@ Tabs["Render"]:CreateToggle({
     end
 })
 
-
+--[[
 local ScreenGuie
 Tabs["Misc"]:CreateToggle({
     ["Name"] = "KeyStrokes",
@@ -1153,6 +1221,8 @@ Tabs["Misc"]:CreateToggle({
         end
     end
 })
+]]
+
 
 local chinahattrail
 local chinahatenabled = false
@@ -1169,7 +1239,7 @@ Tabs["Render"]:CreateToggle({
                     if entity.isAlive then
                         if chinahattrail == nil or chinahattrail.Parent == nil then
                             chinahattrail = Instance.new("Part")
-                            chinahattrail.CFrame = lplr.Character.Head.CFrame * CFrame.new(0, 1.1, 0)
+                            chinahattrail.CFrame = LocalPlayer.Character.Head.CFrame * CFrame.new(0, 1.1, 0)
                             chinahattrail.Size = Vector3.new(3, 0.7, 3)
                             chinahattrail.Name = "ChinaHat"
                             chinahattrail.Material = Enum.Material.Neon
@@ -1183,15 +1253,15 @@ Tabs["Render"]:CreateToggle({
                             local chinahatweld = Instance.new("WeldConstraint")
                             chinahatweld.Name = "WeldConstraint"
                             chinahatweld.Parent = chinahattrail
-                            chinahatweld.Part0 = lplr.Character.Head
+                            chinahatweld.Part0 = LocalPlayer.Character.Head
                             chinahatweld.Part1 = chinahattrail
-                            chinahattrail.Parent = workspace.Camera
+                            chinahattrail.Parent = RealCamera
                         else
-                            chinahattrail.Parent = workspace.Camera
-                            chinahattrail.CFrame = lplr.Character.Head.CFrame * CFrame.new(0, 1.1, 0)
-                            chinahattrail.LocalTransparencyModifier = ((cam.CFrame.Position - cam.Focus.Position).Magnitude <= 0.6 and 1 or 0)
+                            chinahattrail.Parent = RealCamera
+                            chinahattrail.CFrame = LocalPlayer.Character.Head.CFrame * CFrame.new(0, 1.1, 0)
+                            chinahattrail.LocalTransparencyModifier = ((Camera.CFrame.Position - Camera.Focus.Position).Magnitude <= 0.6 and 1 or 0)
                             if chinahattrail:FindFirstChild("WeldConstraint") then
-                                chinahattrail.WeldConstraint.Part0 = lplr.Character.Head
+                                chinahattrail.WeldConstraint.Part0 = LocalPlayer.Character.Head
                             end
                         end
                     else
@@ -1211,10 +1281,8 @@ Tabs["Render"]:CreateToggle({
     end
 })
 
--- EXPLOITS
-
 function yesoksussybed()
-    if lplr.leaderstats.Bed.Value ~= "✅" then
+    if LocalPlayer.leaderstats.Bed.Value ~= "✅" then
         game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Who ever broke my bed, i have your location", 'All')
     end
 end
@@ -1295,7 +1363,7 @@ Tabs["World"]:CreateToggle({
             antivoidpart.Transparency = 0.4
             antivoidpart.Anchored = true
             antivoidpart.Touched:connect(function(thing)
-                if dumbcocks.Parent:WaitForChild("Humanoid") and thing.Parent.Name == lplr.Name then
+                if thing.Parent:WaitForChild("Humanoid") and thing.Parent.Name == LocalPlayer.Name then
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
                     wait(0.2)
                     game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
@@ -1313,7 +1381,7 @@ function stealcheststrollage()
     for i,v in pairs(game.Workspace.Map.Worlds[lcmapname]:GetChildren()) do
         if v.Name == "chest" then
             if v:FindFirstChild("ChestFolderValue") then
-                local mag = (hrp.Position - v.Position).Magnitude
+                local mag = (HumanoidRootPart.Position - v.Position).Magnitude
                 if mag <= 45 then
                     for k,b in pairs(v.ChestFolderValue.Value:GetChildren()) do
                         if b.Name ~= "ChestOwner" then
@@ -1502,7 +1570,7 @@ local function getScaffold(vec, diagonaltoggle)
     local newpos = (oldpos - realvec)
     local returedpos = realvec
     if entity.isAlive then
-        local angle = math.deg(math.atan2(-lplr.Character.Humanoid.MoveDirection.X, -lplr.Character.Humanoid.MoveDirection.Z))
+        local angle = math.deg(math.atan2(-LocalPlayer.Character.Humanoid.MoveDirection.X, -LocalPlayer.Character.Humanoid.MoveDirection.Z))
         local goingdiagonal = (angle >= 130 and angle <= 150) or (angle <= -35 and angle >= -50) or (angle >= 35 and angle <= 50) or (angle <= -130 and angle >= -150)
         if goingdiagonal and ((newpos.X == 0 and newpos.Z ~= 0) or (newpos.X ~= 0 and newpos.Z == 0)) and diagonaltoggle then
             return oldpos
@@ -1524,10 +1592,12 @@ Tabs["World"]:CreateToggle({
             spawn(function()
                 yestwo = RunService.Heartbeat:Connect(function(step)
                     if (not sussythingy) then return end
-                    local y = lplr.Character.HumanoidRootPart.Position.y
-                    local x = lplr.Character.HumanoidRootPart.Position.x
-                    local z = lplr.Character.HumanoidRootPart.Position.z
-                    local blockpos = getScaffold((lplr.Character.Head.Position) + Vector3.new(1, -math.floor(lplr.Character.Humanoid.HipHeight * 3), 0) + lplr.Character.Humanoid.MoveDirection)
+                    local y = LocalPlayer.Character.HumanoidRootPart.Position.y
+                    local x = LocalPlayer.Character.HumanoidRootPart.Position.x
+                    local z = LocalPlayer.Character.HumanoidRootPart.Position.z
+                    if (not sussythingy) then return end
+                    local blockpos = getScaffold((LocalPlayer.Character.Head.Position) + Vector3.new(1, -math.floor(LocalPlayer.Character.Humanoid.HipHeight * 3), 0) + LocalPlayer.Character.Humanoid.MoveDirection)
+                    if (not sussythingy) then return end
                     placeblockthing(blockpos, getwool())
                 end)
             end)
@@ -1538,7 +1608,7 @@ Tabs["World"]:CreateToggle({
 })
 
 function animfunc(id)
-    local Animator = hmd:WaitForChild("Animator")
+    local Animator = Humanoid:WaitForChild("Animator")
     local Animation = Instance.new("Animation", char)
     Animation.AnimationId = "rbxassetid://"..id
     Animation.Parent = char
@@ -1629,24 +1699,32 @@ GravityValueBeb = gravBeb:CreateSlider({
         ["Round"] = 0
     })
 
-
+--[[
 Tabs["Utility"]:CreateToggle({
-    ["Name"] = "InstantPickup",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        if v == true then
+    Name = "InstantPickup",
+    Keybind = nil,
+    Callback = function(v)
+        if v then
             wait()
-			for i,v in pairs(workspace.ItemDrops:GetChildren()) do
-				if Character and Character.Humanoid.Health>0 and (v.Position-Character.HumanoidRootPart.Position).magnitude<=10 then
-					local x,y,z = math.ceil(v.Position.X/3),math.ceil(v.Position.Y/3),math.ceil(v.Position.Z/3)
-						RemoteFolder.PickupItemDrop:InvokeServer({itemDrop=v})
-				end
-			end
-        else
-            
+            local Character = game.Players.LocalPlayer.Character
+            if Character and Character.Humanoid.Health > 0 then
+                local itemDrops = workspace.ItemDrops:GetChildren()
+                
+                for i, itemDrop in ipairs(itemDrops) do
+                    local humanoidRootPart = Character.HumanoidRootPart
+                    if humanoidRootPart and (itemDrop.Position - humanoidRootPart.Position).Magnitude <= 10 then
+                        local x, y, z = math.ceil(itemDrop.Position.X / 3), math.ceil(itemDrop.Position.Y / 3), math.ceil(itemDrop.Position.Z / 3)
+                        RemoteFolder.PickupItemDrop:InvokeServer({ itemDrop = itemDrop })
+                    end
+                end
+            end
         end
     end
 })
+
+]]
+
+
 
 local Hours = {["Value"] = 13}
 local Minutes = {["Value"] = 0}
@@ -1854,31 +1932,44 @@ LightingColorCorrectinSaturation = Light:CreateSlider({
         ["Default"] = 0.1,
         ["Round"] = 1
     })
---[[    
-local TPValue = {["Value"] = 5}
-local AntiRusher = Tabs["Utility"]:CreateToggle({
-    ["Name"] = "ForwardTP",
-    ["Keybind"] = nil,
-    ["Callback"] = function(v)
-        if v == true then
-            game.Players.LocalPlayer.character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.character.HumanoidRootPart.CFrame + Vector3.new(TPValue["Value"], 0, 0)
-        else
 
+local TPValue = {Value = 5}
+local isTeleporting = false
+
+local AntiRusher = Tabs["Utility"]:CreateToggle({
+    Name = "ForwardTP",
+    Keybind = nil,
+    Callback = function(v)
+        if v and not isTeleporting then
+            isTeleporting = true
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if character then
+                local humanoid = character.Humanoid
+                if humanoid.MoveDirection.Magnitude > 0 or humanoid:GetState() == Enum.HumanoidStateType.Running then
+                    local forwardVector = character.HumanoidRootPart.CFrame.lookVector
+                    character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame + forwardVector * TPValue.Value
+                end
+            end
+            isTeleporting = false
+            else
+            
         end
     end
 })
 
 TPValue = AntiRusher:CreateSlider({
-        ["Name"] = "Studs",
-        ["Function"] = function()
-        game.Lighting.Brightness = LightingBrightness["Value"]
-        end,
-        ["Min"] = 0,
-        ["Max"] = 10,
-        ["Default"] = 5,
-        ["Round"] = 0
-    })
-  ]]  
+    Name = "Studs",
+    Function = function(v)
+        TPValue.Value = v
+    end,
+    Min = 0,
+    Max = 9,
+    Default = 5,
+    Round = 0
+})
+
+
 do
 local StatsUpdateDelay = {["Value"] = 0.5}
 --local VisibleDraggFrame = {["Value"] = true}
@@ -1944,19 +2035,6 @@ local statem = Tabs["Misc"]:CreateToggle({
 				
 				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(213, 213, 213)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(213, 213, 213))}
 				UIGradient.Parent = MainBackground
-				
-				Kills_label.Name = "Ks"
-				Kills_label.Parent = MainBackground
-				Kills_label.BackgroundColor3 = Color3.fromRGB(81, 81, 81)
-				--Kills_label.BackgroundTransparency = 0.500
-				Kills_label.BorderColor3 = Color3.fromRGB(134, 134, 134)
-				Kills_label.Position = UDim2.new(0, 0, 0.139999986, 0)
-				Kills_label.Size = UDim2.new(0, 150, 0, 25)
-				Kills_label.Font = Enum.Font.Gotham
-				Kills_label.Text = "Kills: nil"
-				Kills_label.TextColor3 = Color3.fromRGB(255, 255, 255)
-				Kills_label.TextSize = 18.000
-				Kills_label.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
 				
 				Bed_label.Name = "Bedededed_label"
 				Bed_label.Parent = MainBackground
@@ -2105,9 +2183,9 @@ local FovChanger = Tabs["Render"]:CreateToggle({
     ["Keybind"] = nil,
     ["Callback"] = function(v)
         if v then
-	        game.Workspace.Camera.FieldOfView = NewFov["Value"]
+	        Camera.FieldOfView = NewFov["Value"]
         else
-            game.Workspace.Camera.FieldOfView = OldFov
+            Camera.FieldOfView = OldFov
         end
     end
 })
@@ -2115,7 +2193,7 @@ local FovChanger = Tabs["Render"]:CreateToggle({
 NewFov = FovChanger:CreateSlider({
         ["Name"] = "Field Of View",
         ["Function"] = function(v)
-        game.Workspace.Camera.FieldOfView = v or NewFov["Value"]
+        Camera.FieldOfView = v or NewFov["Value"]
         end,
         ["Min"] = 1,
         ["Max"] = 150,
@@ -2193,7 +2271,7 @@ do
                     return nil
                 end
                 for i, v in pairs(game.Players:GetPlayers()) do
-                    --if v.Name ~= lplr.Name then
+                    --if v.Name ~= LocalPlayer.Name then
                         v.Chatted:connect(function(msg)
                             local reportfound = getreport(msg)
                             if reportfound then
@@ -2227,6 +2305,7 @@ do
     })
 end
 
+    
 lib:CreateNotification("Mana", "Press a button on left top of screen to toggle UI" , 10, true)
 
 lib:CreateUIToggleButton()
