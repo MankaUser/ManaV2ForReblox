@@ -4,6 +4,7 @@ repeat task.wait() until game:IsLoaded()
 local Players = game.Players
 local LocalPlayer = Players.LocalPlayer
 local Mouse = game.Players.LocalPlayer:GetMouse()
+local PlayerGui = LocalPlayer.PlayerGui
 
 -- Services
 local UserInputService = game:GetService("UserInputService")
