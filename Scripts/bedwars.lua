@@ -27,6 +27,8 @@ local Camera = workspace.CurrentCamera
 local RealCamera = workspace.Camera
 local ScreenGuitwo = CoreGui.ManaNotificationGui
 local Mouse = LocalPlayer:GetMouse()
+local PlayerGui = LocalPlayer.PlayerGui
+--local leaderstats = LocalPlayer.leaderstats
 
 --What do i write here
 local getasset = getsynasset or getcustomasset
